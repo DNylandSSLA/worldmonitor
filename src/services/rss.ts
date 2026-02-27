@@ -2,7 +2,6 @@ import type { Feed, NewsItem } from '@/types';
 import { SITE_VARIANT } from '@/config';
 import { chunkArray, fetchWithProxy } from '@/utils';
 import { classifyByKeyword, classifyWithAI } from './threat-classifier';
-import { inferGeoHubsFromTitle } from './geo-hub-index';
 import { getPersistentCache, setPersistentCache } from './persistent-cache';
 import { ingestHeadlines } from './trending-keywords';
 import { getCurrentLanguage } from './i18n';
@@ -220,8 +219,6 @@ export async function fetchFeed(feed: Feed): Promise<NewsItem[]> {
         const pubDate = Number.isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
         const threat = classifyByKeyword(title, SITE_VARIANT);
         const isAlert = threat.level === 'critical' || threat.level === 'high';
-        const geoMatches = inferGeoHubsFromTitle(title);
-        const topGeo = geoMatches[0];
 
         return {
           source: feed.name,
@@ -230,7 +227,6 @@ export async function fetchFeed(feed: Feed): Promise<NewsItem[]> {
           pubDate,
           isAlert,
           threat,
-          ...(topGeo && { lat: topGeo.hub.lat, lon: topGeo.hub.lon, locationName: topGeo.hub.name }),
           lang: feed.lang,
         };
       });

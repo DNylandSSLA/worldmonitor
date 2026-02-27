@@ -22,7 +22,6 @@ export * from './CascadePanel';
 export * from './StrategicRiskPanel';
 export * from './StrategicPosturePanel';
 export * from './IntelligenceGapBadge';
-export * from './TechEventsPanel';
 export * from './ServiceStatusPanel';
 export * from './RuntimeConfigPanel';
 export * from './InsightsPanel';
@@ -35,5 +34,4 @@ export * from './UcdpEventsPanel';
 
 export * from './ClimateAnomalyPanel';
 
-export * from './InvestmentsPanel';
 export * from './LanguageSelector';

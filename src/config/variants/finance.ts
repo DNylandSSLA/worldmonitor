@@ -164,7 +164,6 @@ export const DEFAULT_PANELS: Record<string, PanelConfig> = {
   analysis: { name: 'Market Analysis', enabled: true, priority: 2 },
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
-  'gcc-investments': { name: 'GCC Investments', enabled: true, priority: 2 },
   gccNews: { name: 'GCC Business News', enabled: true, priority: 2 },
   polymarket: { name: 'Predictions', enabled: true, priority: 2 },
   monitors: { name: 'My Monitors', enabled: true, priority: 2 },
@@ -202,13 +201,11 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance-specific layers
   stockExchanges: true,
   financialCenters: true,
   centralBanks: true,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 // Mobile defaults for finance variant
@@ -243,13 +240,11 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance layers (limited on mobile)
   stockExchanges: true,
   financialCenters: false,
   centralBanks: true,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 export const VARIANT_CONFIG: VariantConfig = {

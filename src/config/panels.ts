@@ -75,13 +75,11 @@ const FULL_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance layers (disabled in full variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 const FULL_MOBILE_MAP_LAYERS: MapLayers = {
@@ -116,13 +114,11 @@ const FULL_MOBILE_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance layers (disabled in full variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 // ============================================
@@ -141,7 +137,6 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   accelerators: { name: 'Accelerators & Demo Days', enabled: true, priority: 1 },
   security: { name: 'Cybersecurity', enabled: true, priority: 1 },
   policy: { name: 'AI Policy & Regulation', enabled: true, priority: 1 },
-  regulation: { name: 'AI Regulation Dashboard', enabled: true, priority: 1 },
   layoffs: { name: 'Layoffs Tracker', enabled: true, priority: 1 },
   markets: { name: 'Tech Stocks', enabled: true, priority: 2 },
   finance: { name: 'Financial News', enabled: true, priority: 2 },
@@ -154,7 +149,6 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   polymarket: { name: 'Tech Predictions', enabled: true, priority: 2 },
   funding: { name: 'Funding & VC', enabled: true, priority: 1 },
   producthunt: { name: 'Product Hunt', enabled: true, priority: 1 },
-  events: { name: 'Tech Events', enabled: true, priority: 1 },
   'service-status': { name: 'Service Status', enabled: true, priority: 2 },
   economic: { name: 'Economic Indicators', enabled: true, priority: 2 },
   'macro-signals': { name: 'Market Radar', enabled: true, priority: 2 },
@@ -195,13 +189,11 @@ const TECH_MAP_LAYERS: MapLayers = {
   cloudRegions: true,
   accelerators: false,
   techHQs: true,
-  techEvents: true,
   // Finance layers (disabled in tech variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 const TECH_MOBILE_MAP_LAYERS: MapLayers = {
@@ -236,13 +228,11 @@ const TECH_MOBILE_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: true,
   // Finance layers (disabled in tech variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 // ============================================
@@ -273,7 +263,6 @@ const FINANCE_PANELS: Record<string, PanelConfig> = {
   analysis: { name: 'Market Analysis', enabled: true, priority: 2 },
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
-  'gcc-investments': { name: 'GCC Investments', enabled: true, priority: 2 },
   gccNews: { name: 'GCC Business News', enabled: true, priority: 2 },
   polymarket: { name: 'Predictions', enabled: true, priority: 2 },
   monitors: { name: 'My Monitors', enabled: true, priority: 2 },
@@ -311,13 +300,11 @@ const FINANCE_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance layers (enabled in finance variant)
   stockExchanges: true,
   financialCenters: true,
   centralBanks: true,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
@@ -352,13 +339,11 @@ const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   // Finance layers (limited on mobile)
   stockExchanges: true,
   financialCenters: false,
   centralBanks: true,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 // ============================================

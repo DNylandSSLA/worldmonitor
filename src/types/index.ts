@@ -484,14 +484,11 @@ export interface MapLayers {
   cloudRegions: boolean;
   accelerators: boolean;
   techHQs: boolean;
-  techEvents: boolean;
   // Finance variant layers
   stockExchanges: boolean;
   financialCenters: boolean;
   centralBanks: boolean;
   commodityHubs: boolean;
-  // Gulf FDI layers
-  gulfInvestments: boolean;
 }
 
 export interface AIDataCenter {
@@ -953,51 +950,6 @@ export interface CascadeResult {
 // Re-export port types
 export type { Port, PortType } from '@/config/ports';
 
-// AI Regulation Types
-export type RegulationType = 'comprehensive' | 'sectoral' | 'voluntary' | 'proposed';
-export type ComplianceStatus = 'active' | 'proposed' | 'draft' | 'superseded';
-export type RegulationStance = 'strict' | 'moderate' | 'permissive' | 'undefined';
-
-export interface AIRegulation {
-  id: string;
-  name: string;
-  shortName: string;
-  country: string;
-  region?: string;
-  type: RegulationType;
-  status: ComplianceStatus;
-  announcedDate: string;
-  effectiveDate?: string;
-  complianceDeadline?: string;
-  scope: string[];
-  keyProvisions: string[];
-  penalties?: string;
-  link?: string;
-  description?: string;
-}
-
-export interface RegulatoryAction {
-  id: string;
-  date: string;
-  country: string;
-  title: string;
-  type: 'law-passed' | 'executive-order' | 'guideline' | 'enforcement' | 'consultation';
-  regulationId?: string;
-  description: string;
-  impact: 'high' | 'medium' | 'low';
-  source?: string;
-}
-
-export interface CountryRegulationProfile {
-  country: string;
-  countryCode: string;
-  stance: RegulationStance;
-  activeRegulations: string[];
-  proposedRegulations: string[];
-  lastUpdated: string;
-  summary: string;
-}
-
 // Tech Company & AI Lab Types
 export interface TechCompany {
   id: string;
@@ -1107,71 +1059,6 @@ export interface FocalPointSummary {
   topCompanies: FocalPoint[];
 }
 
-// ============================================
-// GULF FDI TYPES
-// ============================================
-
-export type GulfInvestorCountry = 'SA' | 'UAE';
-
-export type GulfInvestmentSector =
-  | 'ports'
-  | 'pipelines'
-  | 'energy'
-  | 'datacenters'
-  | 'airports'
-  | 'railways'
-  | 'telecoms'
-  | 'water'
-  | 'logistics'
-  | 'mining'
-  | 'real-estate'
-  | 'manufacturing';
-
-export type GulfInvestmentStatus =
-  | 'operational'
-  | 'under-construction'
-  | 'announced'
-  | 'rumoured'
-  | 'cancelled'
-  | 'divested';
-
-export type GulfInvestingEntity =
-  | 'DP World'
-  | 'AD Ports'
-  | 'Mubadala'
-  | 'ADIA'
-  | 'ADNOC'
-  | 'Masdar'
-  | 'PIF'
-  | 'Saudi Aramco'
-  | 'ACWA Power'
-  | 'STC'
-  | 'Mawani'
-  | 'NEOM'
-  | 'Emirates Global Aluminium'
-  | 'Other';
-
-export interface GulfInvestment {
-  id: string;
-  investingEntity: GulfInvestingEntity;
-  investingCountry: GulfInvestorCountry;
-  targetCountry: string;
-  targetCountryIso: string;
-  sector: GulfInvestmentSector;
-  assetType: string;
-  assetName: string;
-  lat: number;
-  lon: number;
-  investmentUSD?: number;
-  stakePercent?: number;
-  status: GulfInvestmentStatus;
-  yearAnnounced?: number;
-  yearOperational?: number;
-  description: string;
-  sourceUrl?: string;
-  tags?: string[];
-}
-
 export interface MapProtestCluster {
   id: string;
   lat: number;
@@ -1201,19 +1088,6 @@ export interface MapTechHQCluster {
   faangCount?: number;
   unicornCount?: number;
   publicCount?: number;
-  sampled?: boolean;
-}
-
-export interface MapTechEventCluster {
-  id: string;
-  lat: number;
-  lon: number;
-  count: number;
-  items: Array<{ id: string; title: string; location: string; lat: number; lng: number; country: string; startDate: string; endDate: string; url: string | null; daysUntil: number }>;
-  location: string;
-  country: string;
-  soonestDaysUntil: number;
-  soonCount?: number;
   sampled?: boolean;
 }
 

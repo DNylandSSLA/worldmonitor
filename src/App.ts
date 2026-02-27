@@ -26,7 +26,6 @@ import { analyzeFlightsForSurge, surgeAlertToSignal, detectForeignMilitaryPresen
 import { fetchCachedTheaterPosture } from '@/services/cached-theater-posture';
 import { ingestProtestsForCII, ingestMilitaryForCII, ingestNewsForCII, ingestOutagesForCII, ingestConflictsForCII, ingestUcdpForCII, ingestHapiForCII, ingestClimateForCII, startLearning, isInLearningMode, calculateCII, getCountryData, TIER1_COUNTRIES } from '@/services/country-instability';
 import { dataFreshness, type DataSourceId } from '@/services/data-freshness';
-import { focusInvestmentOnMap } from '@/services/investments-focus';
 import { fetchConflictEvents } from '@/services/conflicts';
 import { fetchUcdpClassifications } from '@/services/ucdp';
 import { fetchHapiSummary } from '@/services/hapi';
@@ -66,7 +65,6 @@ import {
   StrategicRiskPanel,
   StrategicPosturePanel,
   IntelligenceGapBadge,
-  TechEventsPanel,
   ServiceStatusPanel,
   RuntimeConfigPanel,
   InsightsPanel,
@@ -75,7 +73,6 @@ import {
   StablecoinPanel,
   UcdpEventsPanel,
   ClimateAnomalyPanel,
-  InvestmentsPanel,
   LanguageSelector,
 } from '@/components';
 import type { SearchResult } from '@/components/SearchModal';
@@ -1453,11 +1450,6 @@ export class App {
         }, 300);
         break;
       }
-      case 'techevent':
-        this.map?.setView('global');
-        this.map?.enableLayer('techEvents');
-        this.mapLayers.techEvents = true;
-        break;
       case 'techhq': {
         const hq = result.data as typeof TECH_HQS[0];
         this.map?.setView('global');
@@ -2153,19 +2145,8 @@ export class App {
 
     }
 
-    // GCC Investments Panel (finance variant)
-    if (SITE_VARIANT === 'finance') {
-      const investmentsPanel = new InvestmentsPanel((inv) => {
-        focusInvestmentOnMap(this.map, this.mapLayers, inv.lat, inv.lon);
-      });
-      this.panels['gcc-investments'] = investmentsPanel;
-    }
-
     const liveNewsPanel = new LiveNewsPanel();
     this.panels['live-news'] = liveNewsPanel;
-
-    // Tech Events Panel (tech variant only - but create for all to allow toggling)
-    this.panels['events'] = new TechEventsPanel('events');
 
     // Service Status Panel (primarily for tech variant)
     const serviceStatusPanel = new ServiceStatusPanel();
@@ -2894,7 +2875,6 @@ export class App {
     if (this.mapLayers.cables) tasks.push({ name: 'cables', task: runGuarded('cables', () => this.loadCableActivity()) });
     if (this.mapLayers.flights) tasks.push({ name: 'flights', task: runGuarded('flights', () => this.loadFlightDelays()) });
     if (CYBER_LAYER_ENABLED && this.mapLayers.cyberThreats) tasks.push({ name: 'cyberThreats', task: runGuarded('cyberThreats', () => this.loadCyberThreats()) });
-    if (this.mapLayers.techEvents || SITE_VARIANT === 'tech') tasks.push({ name: 'techEvents', task: runGuarded('techEvents', () => this.loadTechEvents()) });
 
     // Use allSettled to ensure all tasks complete and search index always updates
     const results = await Promise.allSettled(tasks.map(t => t.task));
@@ -2945,11 +2925,6 @@ export class App {
           break;
         case 'military':
           await this.loadMilitary();
-          break;
-        case 'techEvents':
-          console.log('[loadDataForLayer] Loading techEvents...');
-          await this.loadTechEvents();
-          console.log('[loadDataForLayer] techEvents loaded');
           break;
         case 'ucdpEvents':
         case 'climate':
@@ -3397,65 +3372,6 @@ export class App {
     const hasEarthquakes = earthquakeResult.status === 'fulfilled' && earthquakeResult.value.length > 0;
     const hasEonet = eonetResult.status === 'fulfilled' && eonetResult.value.length > 0;
     this.map?.setLayerReady('natural', hasEarthquakes || hasEonet);
-  }
-
-  private async loadTechEvents(): Promise<void> {
-    console.log('[loadTechEvents] Called. SITE_VARIANT:', SITE_VARIANT, 'techEvents layer:', this.mapLayers.techEvents);
-    // Only load for tech variant or if techEvents layer is enabled
-    if (SITE_VARIANT !== 'tech' && !this.mapLayers.techEvents) {
-      console.log('[loadTechEvents] Skipping - not tech variant and layer disabled');
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/tech-events?type=conference&mappable=true&days=90&limit=50');
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || 'Unknown error');
-
-      // Transform events for map markers
-      const now = new Date();
-      const mapEvents = data.events.map((e: {
-        id: string;
-        title: string;
-        location: string;
-        coords: { lat: number; lng: number; country: string };
-        startDate: string;
-        endDate: string;
-        url: string | null;
-      }) => ({
-        id: e.id,
-        title: e.title,
-        location: e.location,
-        lat: e.coords.lat,
-        lng: e.coords.lng,
-        country: e.coords.country,
-        startDate: e.startDate,
-        endDate: e.endDate,
-        url: e.url,
-        daysUntil: Math.ceil((new Date(e.startDate).getTime() - now.getTime()) / (1000 * 60 * 60 * 24)),
-      }));
-
-      this.map?.setTechEvents(mapEvents);
-      this.map?.setLayerReady('techEvents', mapEvents.length > 0);
-      this.statusPanel?.updateFeed('Tech Events', { status: 'ok', itemCount: mapEvents.length });
-
-      // Register tech events as searchable source
-      if (SITE_VARIANT === 'tech' && this.searchModal) {
-        this.searchModal.registerSource('techevent', mapEvents.map((e: { id: string; title: string; location: string; startDate: string }) => ({
-          id: e.id,
-          title: e.title,
-          subtitle: `${e.location} • ${new Date(e.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
-          data: e,
-        })));
-      }
-    } catch (error) {
-      console.error('[App] Failed to load tech events:', error);
-      this.map?.setTechEvents([]);
-      this.map?.setLayerReady('techEvents', false);
-      this.statusPanel?.updateFeed('Tech Events', { status: 'error', errorMessage: String(error) });
-    }
   }
 
   private async loadWeatherAlerts(): Promise<void> {

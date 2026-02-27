@@ -2,8 +2,6 @@ import type { ConflictZone, Hotspot, Earthquake, NewsItem, MilitaryBase, Strateg
 import type { WeatherAlert } from '@/services/weather';
 import { UNDERSEA_CABLES } from '@/config';
 import type { StartupHub, Accelerator, TechHQ, CloudRegion } from '@/config/tech-geo';
-import type { TechHubActivity } from '@/services/tech-activity';
-import type { GeoHubActivity } from '@/services/geo-activity';
 import { escapeHtml, sanitizeUrl } from '@/utils/sanitize';
 import { isMobileDevice, getCSSColor } from '@/utils';
 import { t } from '@/services/i18n';
@@ -11,20 +9,7 @@ import { fetchHotspotContext, formatArticleDate, extractDomain, type GdeltArticl
 import { getNaturalEventIcon } from '@/services/eonet';
 import { getHotspotEscalation, getEscalationChange24h } from '@/services/hotspot-escalation';
 
-export type PopupType = 'conflict' | 'hotspot' | 'earthquake' | 'weather' | 'base' | 'waterway' | 'apt' | 'cyberThreat' | 'nuclear' | 'economic' | 'irradiator' | 'pipeline' | 'cable' | 'cable-advisory' | 'repair-ship' | 'outage' | 'datacenter' | 'datacenterCluster' | 'ais' | 'protest' | 'protestCluster' | 'flight' | 'militaryFlight' | 'militaryVessel' | 'militaryFlightCluster' | 'militaryVesselCluster' | 'natEvent' | 'port' | 'spaceport' | 'mineral' | 'startupHub' | 'cloudRegion' | 'techHQ' | 'accelerator' | 'techEvent' | 'techHQCluster' | 'techEventCluster' | 'techActivity' | 'geoActivity' | 'stockExchange' | 'financialCenter' | 'centralBank' | 'commodityHub';
-
-interface TechEventPopupData {
-  id: string;
-  title: string;
-  location: string;
-  lat: number;
-  lng: number;
-  country: string;
-  startDate: string;
-  endDate: string;
-  url: string | null;
-  daysUntil: number;
-}
+export type PopupType = 'conflict' | 'hotspot' | 'earthquake' | 'weather' | 'base' | 'waterway' | 'apt' | 'cyberThreat' | 'nuclear' | 'economic' | 'irradiator' | 'pipeline' | 'cable' | 'cable-advisory' | 'repair-ship' | 'outage' | 'datacenter' | 'datacenterCluster' | 'ais' | 'protest' | 'protestCluster' | 'flight' | 'militaryFlight' | 'militaryVessel' | 'militaryFlightCluster' | 'militaryVesselCluster' | 'natEvent' | 'port' | 'spaceport' | 'mineral' | 'startupHub' | 'cloudRegion' | 'techHQ' | 'accelerator' | 'techHQCluster' | 'stockExchange' | 'financialCenter' | 'centralBank' | 'commodityHub';
 
 interface TechHQClusterData {
   items: TechHQ[];
@@ -34,15 +19,6 @@ interface TechHQClusterData {
   faangCount?: number;
   unicornCount?: number;
   publicCount?: number;
-  sampled?: boolean;
-}
-
-interface TechEventClusterData {
-  items: TechEventPopupData[];
-  location: string;
-  country: string;
-  count?: number;
-  soonCount?: number;
   sampled?: boolean;
 }
 
@@ -117,7 +93,7 @@ interface DatacenterClusterData {
 
 interface PopupData {
   type: PopupType;
-  data: ConflictZone | Hotspot | Earthquake | WeatherAlert | MilitaryBase | StrategicWaterway | APTGroup | CyberThreat | NuclearFacility | EconomicCenter | GammaIrradiator | Pipeline | UnderseaCable | CableAdvisory | RepairShip | InternetOutage | AIDataCenter | AisDisruptionEvent | SocialUnrestEvent | AirportDelayAlert | MilitaryFlight | MilitaryVessel | MilitaryFlightCluster | MilitaryVesselCluster | NaturalEvent | Port | Spaceport | CriticalMineralProject | StartupHub | CloudRegion | TechHQ | Accelerator | TechEventPopupData | TechHQClusterData | TechEventClusterData | ProtestClusterData | DatacenterClusterData | TechHubActivity | GeoHubActivity | StockExchangePopupData | FinancialCenterPopupData | CentralBankPopupData | CommodityHubPopupData;
+  data: ConflictZone | Hotspot | Earthquake | WeatherAlert | MilitaryBase | StrategicWaterway | APTGroup | CyberThreat | NuclearFacility | EconomicCenter | GammaIrradiator | Pipeline | UnderseaCable | CableAdvisory | RepairShip | InternetOutage | AIDataCenter | AisDisruptionEvent | SocialUnrestEvent | AirportDelayAlert | MilitaryFlight | MilitaryVessel | MilitaryFlightCluster | MilitaryVesselCluster | NaturalEvent | Port | Spaceport | CriticalMineralProject | StartupHub | CloudRegion | TechHQ | Accelerator | TechHQClusterData | ProtestClusterData | DatacenterClusterData | StockExchangePopupData | FinancialCenterPopupData | CentralBankPopupData | CommodityHubPopupData;
   relatedNews?: NewsItem[];
   x: number;
   y: number;
@@ -312,12 +288,8 @@ export class MapPopup {
         return this.renderTechHQPopup(data.data as TechHQ);
       case 'accelerator':
         return this.renderAcceleratorPopup(data.data as Accelerator);
-      case 'techEvent':
-        return this.renderTechEventPopup(data.data as TechEventPopupData);
       case 'techHQCluster':
         return this.renderTechHQClusterPopup(data.data as TechHQClusterData);
-      case 'techEventCluster':
-        return this.renderTechEventClusterPopup(data.data as TechEventClusterData);
       case 'stockExchange':
         return this.renderStockExchangePopup(data.data as StockExchangePopupData);
       case 'financialCenter':
@@ -1673,48 +1645,6 @@ export class MapPopup {
     `;
   }
 
-  private renderTechEventPopup(event: TechEventPopupData): string {
-    const startDate = new Date(event.startDate);
-    const endDate = new Date(event.endDate);
-    const dateStr = startDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    const endDateStr = endDate > startDate && endDate.toDateString() !== startDate.toDateString()
-      ? ` - ${endDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`
-      : '';
-
-    const urgencyClass = event.daysUntil <= 7 ? 'urgent' : event.daysUntil <= 30 ? 'soon' : '';
-    const daysLabel = event.daysUntil === 0
-      ? t('popups.techEvent.days.today')
-      : event.daysUntil === 1
-      ? t('popups.techEvent.days.tomorrow')
-      : t('popups.techEvent.days.inDays', { count: String(event.daysUntil) });
-
-    return `
-      <div class="popup-header tech-event ${urgencyClass}">
-        <span class="popup-title">📅 ${escapeHtml(event.title)}</span>
-        <span class="popup-badge ${urgencyClass}">${daysLabel}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">📍 ${escapeHtml(event.location)}, ${escapeHtml(event.country)}</div>
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.techEvent.date')}</span>
-            <span class="stat-value">${dateStr}${endDateStr}</span>
-          </div>
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.location')}</span>
-            <span class="stat-value">${escapeHtml(event.location)}</span>
-          </div>
-        </div>
-        ${event.url ? `
-        <a href="${sanitizeUrl(event.url)}" target="_blank" rel="noopener noreferrer" class="popup-link">
-          ${t('popups.techEvent.moreInformation')} →
-        </a>
-        ` : ''}
-      </div>
-    `;
-  }
-
   private renderTechHQClusterPopup(data: TechHQClusterData): string {
     const totalCount = data.count ?? data.items.length;
     const unicornCount = data.unicornCount ?? data.items.filter(h => h.type === 'unicorn').length;
@@ -1747,33 +1677,6 @@ export class MapPopup {
         </div>
         <ul class="cluster-list">${listItems}</ul>
         ${data.sampled ? `<p class="popup-more">${t('popups.techHQCluster.sampled', { count: String(data.items.length) })}</p>` : ''}
-      </div>
-    `;
-  }
-
-  private renderTechEventClusterPopup(data: TechEventClusterData): string {
-    const totalCount = data.count ?? data.items.length;
-    const upcomingSoon = data.soonCount ?? data.items.filter(e => e.daysUntil <= 14).length;
-    const sortedItems = [...data.items].sort((a, b) => a.daysUntil - b.daysUntil);
-
-    const listItems = sortedItems.map(event => {
-      const startDate = new Date(event.startDate);
-      const dateStr = startDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      const urgencyClass = event.daysUntil <= 7 ? 'urgent' : event.daysUntil <= 30 ? 'soon' : '';
-      return `<li class="cluster-item ${urgencyClass}">📅 ${dateStr}: ${escapeHtml(event.title)}</li>`;
-    }).join('');
-
-    return `
-      <div class="popup-header tech-event cluster">
-        <span class="popup-title">📅 ${escapeHtml(data.location)}</span>
-        <span class="popup-badge">${t('popups.techEventCluster.eventsCount', { count: String(totalCount) })}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body cluster-popup">
-        <div class="popup-subtitle">📍 ${escapeHtml(data.location)}, ${escapeHtml(data.country)}</div>
-        ${upcomingSoon ? `<div class="cluster-summary"><span class="summary-item soon">⚡ ${t('popups.techEventCluster.upcomingWithin2Weeks', { count: String(upcomingSoon) })}</span></div>` : ''}
-        <ul class="cluster-list">${listItems}</ul>
-        ${data.sampled ? `<p class="popup-more">${t('popups.techEventCluster.sampled', { count: String(data.items.length) })}</p>` : ''}
       </div>
     `;
   }

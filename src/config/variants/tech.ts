@@ -9,8 +9,6 @@ export * from './base';
 export * from '../tech-companies';
 export * from '../ai-research-labs';
 export * from '../startup-ecosystems';
-export * from '../ai-regulations';
-
 // Tech-focused feeds (subset of full feeds config)
 export {
   SOURCE_TIERS,
@@ -174,7 +172,6 @@ export const FEEDS: Record<string, Feed[]> = {
 export const DEFAULT_PANELS: Record<string, PanelConfig> = {
   map: { name: 'Global Tech Map', enabled: true, priority: 1 },
   'live-news': { name: 'Tech Headlines', enabled: true, priority: 1 },
-  events: { name: 'Tech Events', enabled: true, priority: 1 },
   ai: { name: 'AI/ML News', enabled: true, priority: 1 },
   tech: { name: 'Technology', enabled: true, priority: 1 },
   startups: { name: 'Startups & VC', enabled: true, priority: 1 },
@@ -184,7 +181,6 @@ export const DEFAULT_PANELS: Record<string, PanelConfig> = {
   accelerators: { name: 'Accelerators & Demo Days', enabled: true, priority: 1 },
   security: { name: 'Cybersecurity', enabled: true, priority: 1 },
   policy: { name: 'AI Policy & Regulation', enabled: true, priority: 1 },
-  regulation: { name: 'AI Regulation Dashboard', enabled: true, priority: 1 },
   layoffs: { name: 'Layoffs Tracker', enabled: true, priority: 1 },
   markets: { name: 'Tech Stocks', enabled: true, priority: 2 },
   finance: { name: 'Financial News', enabled: true, priority: 2 },
@@ -231,13 +227,11 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   cloudRegions: true,
   accelerators: false,
   techHQs: true,
-  techEvents: true,
   // Finance layers (disabled in tech variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 // Mobile defaults for tech variant
@@ -272,13 +266,11 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: true,
   // Finance layers (disabled in tech variant)
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 export const VARIANT_CONFIG: VariantConfig = {

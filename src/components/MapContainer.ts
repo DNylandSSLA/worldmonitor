@@ -41,18 +41,6 @@ export interface MapContainerState {
   timeRange: TimeRange;
 }
 
-interface TechEventMarker {
-  id: string;
-  title: string;
-  location: string;
-  lat: number;
-  lng: number;
-  country: string;
-  startDate: string;
-  endDate: string;
-  url: string | null;
-  daysUntil: number;
-}
 
 /**
  * Unified map interface that delegates to either DeckGLMap or MapComponent
@@ -263,13 +251,6 @@ export class MapContainer {
     }
   }
 
-  public setTechEvents(events: TechEventMarker[]): void {
-    if (this.useDeckGL) {
-      this.deckGLMap?.setTechEvents(events);
-    } else {
-      this.svgMap?.setTechEvents(events);
-    }
-  }
 
   public setUcdpEvents(events: UcdpGeoEvent[]): void {
     if (this.useDeckGL) {

@@ -164,12 +164,10 @@ const allLayersEnabled: MapLayers = {
   cloudRegions: true,
   accelerators: true,
   techHQs: true,
-  techEvents: true,
   stockExchanges: true,
   financialCenters: true,
   centralBanks: true,
   commodityHubs: true,
-  gulfInvestments: true,
 };
 
 const allLayersDisabled: MapLayers = {
@@ -201,12 +199,10 @@ const allLayersDisabled: MapLayers = {
   cloudRegions: false,
   accelerators: false,
   techHQs: false,
-  techEvents: false,
   stockExchanges: false,
   financialCenters: false,
   centralBanks: false,
   commodityHubs: false,
-  gulfInvestments: false,
 };
 
 const SEEDED_NEWS_LOCATIONS: Array<{
@@ -389,7 +385,6 @@ const seededCameras = {
   military: toCamera(56.3, 26.1, 5.2),
   natural: toCamera(-118.2, 34.1, 4.8),
   fires: toCamera(-60.1, -5.4, 5.0),
-  techEvents: toCamera(-122.42, 37.77, 5.2),
   news: toCamera(2.35, 48.85, 5.0),
 };
 
@@ -653,14 +648,6 @@ const VISUAL_SCENARIOS: VisualScenario[] = [
     enabledLayers: ['techHQs'],
     camera: toCamera(techHQLon, techHQLat, 5.2),
     expectedDeckLayers: ['tech-hq-clusters-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'tech-events-z5',
-    variant: 'tech',
-    enabledLayers: ['techEvents'],
-    camera: seededCameras.techEvents,
-    expectedDeckLayers: ['tech-event-clusters-layer'],
     expectedSelectors: [],
   },
   {
@@ -1025,32 +1012,6 @@ const seedAllDynamicData = (): void => {
       region: 'Harness Fire Region',
       acq_date: '2026-02-01',
       daynight: 'D',
-    },
-  ]);
-  map.setTechEvents([
-    {
-      id: 'e2e-tech-event-1',
-      title: 'Harness Summit Alpha',
-      location: 'Harness City',
-      lat: 37.77,
-      lng: -122.42,
-      country: 'US',
-      startDate: '2026-03-10',
-      endDate: '2026-03-12',
-      url: 'https://example.com/alpha',
-      daysUntil: 20,
-    },
-    {
-      id: 'e2e-tech-event-2',
-      title: 'Harness Summit Beta',
-      location: 'Harness City',
-      lat: 37.77,
-      lng: -122.42,
-      country: 'US',
-      startDate: '2026-04-01',
-      endDate: '2026-04-02',
-      url: 'https://example.com/beta',
-      daysUntil: 42,
     },
   ]);
   map.setNewsLocations(SEEDED_NEWS_LOCATIONS);

@@ -84,13 +84,6 @@ export { TECH_COMPANIES } from './tech-companies';
 export { AI_RESEARCH_LABS } from './ai-research-labs';
 export { STARTUP_ECOSYSTEMS } from './startup-ecosystems';
 export {
-  AI_REGULATIONS,
-  REGULATORY_ACTIONS,
-  COUNTRY_REGULATION_PROFILES,
-  getUpcomingDeadlines,
-  getRecentActions,
-} from './ai-regulations';
-export {
   STARTUP_HUBS,
   ACCELERATORS,
   TECH_HQS,
@@ -113,5 +106,3 @@ export {
   type CommodityHub,
 } from './finance-geo';
 
-// Gulf FDI investment database
-export { GULF_INVESTMENTS } from './gulf-fdi';

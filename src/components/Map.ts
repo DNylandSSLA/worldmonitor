@@ -5,8 +5,6 @@ import { getCSSColor } from '@/utils';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { Feature, Geometry } from 'geojson';
 import type { MapLayers, Hotspot, NewsItem, Earthquake, InternetOutage, RelatedAsset, AssetType, AisDisruptionEvent, AisDensityZone, CableAdvisory, RepairShip, SocialUnrestEvent, AirportDelayAlert, MilitaryFlight, MilitaryVessel, MilitaryFlightCluster, MilitaryVesselCluster, NaturalEvent, CyberThreat } from '@/types';
-import type { TechHubActivity } from '@/services/tech-activity';
-import type { GeoHubActivity } from '@/services/geo-activity';
 import { getNaturalEventIcon } from '@/services/eonet';
 import type { WeatherAlert } from '@/services/weather';
 import { getSeverityColor } from '@/services/weather';
@@ -67,19 +65,6 @@ interface HotspotWithBreaking extends Hotspot {
   hasBreaking?: boolean;
 }
 
-interface TechEventMarker {
-  id: string;
-  title: string;
-  location: string;
-  lat: number;
-  lng: number;
-  country: string;
-  startDate: string;
-  endDate: string;
-  url: string | null;
-  daysUntil: number;
-}
-
 interface WorldTopology extends Topology {
   objects: {
     countries: GeometryCollection;
@@ -127,12 +112,7 @@ export class MapComponent {
   private militaryVesselClusters: MilitaryVesselCluster[] = [];
   private naturalEvents: NaturalEvent[] = [];
   private firmsFireData: Array<{ lat: number; lon: number; brightness: number; frp: number; confidence: number; region: string; acq_date: string; daynight: string }> = [];
-  private techEvents: TechEventMarker[] = [];
-  private techActivities: TechHubActivity[] = [];
-  private geoActivities: GeoHubActivity[] = [];
   private news: NewsItem[] = [];
-  private onTechHubClick?: (hub: TechHubActivity) => void;
-  private onGeoHubClick?: (hub: GeoHubActivity) => void;
   private popup: MapPopup;
   private onHotspotClick?: (hotspot: Hotspot) => void;
   private onTimeRangeChange?: (range: TimeRange) => void;
@@ -347,7 +327,7 @@ export class MapComponent {
     ];
     const techLayers: (keyof MapLayers)[] = [
       'cables', 'datacenters', 'outages',                // tech infrastructure
-      'startupHubs', 'cloudRegions', 'accelerators', 'techHQs', 'techEvents', // tech ecosystem
+      'startupHubs', 'cloudRegions', 'accelerators', 'techHQs', // tech ecosystem
       'natural', 'weather',                               // natural events
       'economic',                                         // economic/geographic
     ];
@@ -379,12 +359,10 @@ export class MapComponent {
       cloudRegions: 'components.deckgl.layers.cloudRegions',
       accelerators: 'components.deckgl.layers.accelerators',
       techHQs: 'components.deckgl.layers.techHQs',
-      techEvents: 'components.deckgl.layers.techEvents',
       stockExchanges: 'components.deckgl.layers.stockExchanges',
       financialCenters: 'components.deckgl.layers.financialCenters',
       centralBanks: 'components.deckgl.layers.centralBanks',
       commodityHubs: 'components.deckgl.layers.commodityHubs',
-      gulfInvestments: 'components.deckgl.layers.gulfInvestments',
     };
     const getLayerLabel = (layer: keyof MapLayers): string => {
       if (layer === 'sanctions') return t('components.deckgl.layerHelp.labels.sanctions');
@@ -575,7 +553,6 @@ export class MapComponent {
         <div class="map-legend-item"><span class="legend-dot" style="background:#8b5cf6"></span>${escapeHtml(t('components.deckgl.layers.techHQs').toUpperCase())}</div>
         <div class="map-legend-item"><span class="legend-dot" style="background:#06b6d4"></span>${escapeHtml(t('components.deckgl.layers.startupHubs').toUpperCase())}</div>
         <div class="map-legend-item"><span class="legend-dot" style="background:#f59e0b"></span>${escapeHtml(t('components.deckgl.layers.cloudRegions').toUpperCase())}</div>
-        <div class="map-legend-item"><span class="map-legend-icon" style="color:#a855f7">📅</span>${escapeHtml(t('components.deckgl.layers.techEvents').toUpperCase())}</div>
         <div class="map-legend-item"><span class="map-legend-icon" style="color:#4ecdc4">💾</span>${escapeHtml(t('components.deckgl.layers.aiDataCenters').toUpperCase())}</div>
       `;
     } else {
@@ -1896,66 +1873,6 @@ export class MapComponent {
       });
     }
 
-    // Tech Events / Conferences (📅 icons) - with clustering
-    if (this.state.layers.techEvents && this.techEvents.length > 0) {
-      const mapWidth = this.container.clientWidth;
-      const mapHeight = this.container.clientHeight;
-
-      // Map events to have lon property for clustering, filter visible
-      const visibleEvents = this.techEvents
-        .map(e => ({ ...e, lon: e.lng }))
-        .filter(e => {
-          const pos = projection([e.lon, e.lat]);
-          return pos && pos[0] >= 0 && pos[0] <= mapWidth && pos[1] >= 0 && pos[1] <= mapHeight;
-        });
-
-      const clusterRadius = this.state.zoom >= 4 ? 15 : this.state.zoom >= 3 ? 25 : 40;
-      // Group by location to prevent clustering events from different cities
-      const clusters = this.clusterMarkers(visibleEvents, projection, clusterRadius, e => e.location);
-
-      clusters.forEach((cluster) => {
-        if (cluster.items.length === 0) return;
-        const div = document.createElement('div');
-        const isCluster = cluster.items.length > 1;
-        const primaryEvent = cluster.items[0]!;
-        const hasUpcomingSoon = cluster.items.some(e => e.daysUntil <= 14);
-
-        div.className = `tech-event-marker ${hasUpcomingSoon ? 'upcoming-soon' : ''} ${isCluster ? 'cluster' : ''}`;
-        div.style.left = `${cluster.pos[0]}px`;
-        div.style.top = `${cluster.pos[1]}px`;
-
-        if (isCluster) {
-          const badge = document.createElement('div');
-          badge.className = 'cluster-badge';
-          badge.textContent = String(cluster.items.length);
-          div.appendChild(badge);
-          div.title = cluster.items.map(e => e.title).join(', ');
-        }
-
-        div.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const rect = this.container.getBoundingClientRect();
-          if (isCluster) {
-            this.popup.show({
-              type: 'techEventCluster',
-              data: { items: cluster.items, location: primaryEvent.location, country: primaryEvent.country },
-              x: e.clientX - rect.left,
-              y: e.clientY - rect.top,
-            });
-          } else {
-            this.popup.show({
-              type: 'techEvent',
-              data: primaryEvent,
-              x: e.clientX - rect.left,
-              y: e.clientY - rect.top,
-            });
-          }
-        });
-
-        this.overlays.appendChild(div);
-      });
-    }
-
     // Stock Exchanges (🏛️ icon by tier)
     if (this.state.layers.stockExchanges) {
       STOCK_EXCHANGES.forEach((exchange) => {
@@ -2095,80 +2012,6 @@ export class MapComponent {
           this.popup.show({
             type: 'commodityHub',
             data: hub,
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-          });
-        });
-
-        this.overlays.appendChild(div);
-      });
-    }
-
-    // Tech Hub Activity Markers (shows activity heatmap for tech hubs with news activity)
-    if (SITE_VARIANT === 'tech' && this.techActivities.length > 0) {
-      this.techActivities.forEach((activity) => {
-        const pos = projection([activity.lon, activity.lat]);
-        if (!pos) return;
-
-        // Only show markers for hubs with actual activity
-        if (activity.newsCount === 0) return;
-
-        const div = document.createElement('div');
-        div.className = `tech-activity-marker ${activity.activityLevel}`;
-        div.style.left = `${pos[0]}px`;
-        div.style.top = `${pos[1]}px`;
-        div.style.zIndex = activity.activityLevel === 'high' ? '60' : activity.activityLevel === 'elevated' ? '50' : '40';
-        div.title = `${activity.city}: ${activity.newsCount} stories`;
-
-        div.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.onTechHubClick?.(activity);
-          const rect = this.container.getBoundingClientRect();
-          this.popup.show({
-            type: 'techActivity',
-            data: activity,
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-          });
-        });
-
-        this.overlays.appendChild(div);
-
-        // Add label for high/elevated activity hubs at sufficient zoom
-        if ((activity.activityLevel === 'high' || (activity.activityLevel === 'elevated' && this.state.zoom >= 2)) && this.state.zoom >= 1.5) {
-          const label = document.createElement('div');
-          label.className = 'tech-activity-label';
-          label.textContent = activity.city;
-          label.style.left = `${pos[0]}px`;
-          label.style.top = `${pos[1] + 14}px`;
-          this.overlays.appendChild(label);
-        }
-      });
-    }
-
-    // Geo Hub Activity Markers (shows activity heatmap for geopolitical hubs - full variant)
-    if (SITE_VARIANT === 'full' && this.geoActivities.length > 0) {
-      this.geoActivities.forEach((activity) => {
-        const pos = projection([activity.lon, activity.lat]);
-        if (!pos) return;
-
-        // Only show markers for hubs with actual activity
-        if (activity.newsCount === 0) return;
-
-        const div = document.createElement('div');
-        div.className = `geo-activity-marker ${activity.activityLevel}`;
-        div.style.left = `${pos[0]}px`;
-        div.style.top = `${pos[1]}px`;
-        div.style.zIndex = activity.activityLevel === 'high' ? '60' : activity.activityLevel === 'elevated' ? '50' : '40';
-        div.title = `${activity.name}: ${activity.newsCount} stories`;
-
-        div.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.onGeoHubClick?.(activity);
-          const rect = this.container.getBoundingClientRect();
-          this.popup.show({
-            type: 'geoActivity',
-            data: activity,
             x: e.clientX - rect.left,
             y: e.clientY - rect.top,
           });
@@ -2867,7 +2710,7 @@ export class MapComponent {
   }
 
   private static readonly ASYNC_DATA_LAYERS: Set<keyof MapLayers> = new Set([
-    'natural', 'weather', 'outages', 'ais', 'protests', 'flights', 'military', 'techEvents',
+    'natural', 'weather', 'outages', 'ais', 'protests', 'flights', 'military',
   ]);
 
   public toggleLayer(layer: keyof MapLayers): void {
@@ -3426,10 +3269,6 @@ export class MapComponent {
     this.render();
   }
 
-  public setTechEvents(events: TechEventMarker[]): void {
-    this.techEvents = events;
-    this.render();
-  }
 
   public setCyberThreats(_threats: CyberThreat[]): void {
     // SVG/mobile fallback intentionally does not render this layer to stay lightweight.
@@ -3438,24 +3277,6 @@ export class MapComponent {
   public setNewsLocations(_data: Array<{ lat: number; lon: number; title: string; threatLevel: string; timestamp?: Date }>): void {
     // SVG fallback: news locations rendered as simple circles
     // For now, skip on SVG map to keep mobile lightweight
-  }
-
-  public setTechActivity(activities: TechHubActivity[]): void {
-    this.techActivities = activities;
-    this.render();
-  }
-
-  public setOnTechHubClick(handler: (hub: TechHubActivity) => void): void {
-    this.onTechHubClick = handler;
-  }
-
-  public setGeoActivity(activities: GeoHubActivity[]): void {
-    this.geoActivities = activities;
-    this.render();
-  }
-
-  public setOnGeoHubClick(handler: (hub: GeoHubActivity) => void): void {
-    this.onGeoHubClick = handler;
   }
 
   private getCableAdvisory(cableId: string): CableAdvisory | undefined {
