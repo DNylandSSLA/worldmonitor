@@ -29,7 +29,6 @@ import type {
   MilitaryVesselCluster,
   NaturalEvent,
   UcdpGeoEvent,
-  DisplacementFlow,
   ClimateAnomaly,
   MapProtestCluster,
   MapTechHQCluster,
@@ -37,7 +36,6 @@ import type {
   MapDatacenterCluster,
   CyberThreat,
 } from '@/types';
-import { ArcLayer } from '@deck.gl/layers';
 import { HeatmapLayer } from '@deck.gl/aggregation-layers';
 import type { WeatherAlert } from '@/services/weather';
 import { escapeHtml } from '@/utils/sanitize';
@@ -262,7 +260,6 @@ export class DeckGLMap {
   private newsLocations: Array<{ lat: number; lon: number; title: string; threatLevel: string; timestamp?: Date }> = [];
   private newsLocationFirstSeen = new Map<string, number>();
   private ucdpEvents: UcdpGeoEvent[] = [];
-  private displacementFlows: DisplacementFlow[] = [];
   private climateAnomalies: ClimateAnomaly[] = [];
 
   // Country highlight state
@@ -1095,11 +1092,6 @@ export class DeckGLMap {
     // UCDP georeferenced events layer
     if (mapLayers.ucdpEvents && filteredUcdpEvents.length > 0) {
       layers.push(this.createUcdpEventsLayer(filteredUcdpEvents));
-    }
-
-    // Displacement flows arc layer
-    if (mapLayers.displacement && this.displacementFlows.length > 0) {
-      layers.push(this.createDisplacementArcsLayer());
     }
 
     // Climate anomalies heatmap layer
@@ -2769,7 +2761,6 @@ export class DeckGLMap {
         { key: 'flights', label: t('components.deckgl.layers.flightDelays'), icon: '&#9992;' },
         { key: 'protests', label: t('components.deckgl.layers.protests'), icon: '&#128226;' },
         { key: 'ucdpEvents', label: t('components.deckgl.layers.ucdpEvents'), icon: '&#9876;' },
-        { key: 'displacement', label: t('components.deckgl.layers.displacementFlows'), icon: '&#128101;' },
         { key: 'climate', label: t('components.deckgl.layers.climateAnomalies'), icon: '&#127787;' },
         { key: 'weather', label: t('components.deckgl.layers.weatherAlerts'), icon: '&#9928;' },
         { key: 'outages', label: t('components.deckgl.layers.internetOutages'), icon: '&#128225;' },
@@ -3176,24 +3167,6 @@ export class DeckGLMap {
     });
   }
 
-  private createDisplacementArcsLayer(): ArcLayer<DisplacementFlow> {
-    const withCoords = this.displacementFlows.filter(f => f.originLat != null && f.asylumLat != null);
-    const top50 = withCoords.slice(0, 50);
-    const maxCount = Math.max(1, ...top50.map(f => f.refugees));
-    return new ArcLayer<DisplacementFlow>({
-      id: 'displacement-arcs-layer',
-      data: top50,
-      getSourcePosition: (d) => [d.originLon!, d.originLat!],
-      getTargetPosition: (d) => [d.asylumLon!, d.asylumLat!],
-      getSourceColor: getCurrentTheme() === 'light' ? [50, 80, 180, 220] : [100, 150, 255, 180],
-      getTargetColor: getCurrentTheme() === 'light' ? [20, 150, 100, 220] : [100, 255, 200, 180],
-      getWidth: (d) => Math.max(1, (d.refugees / maxCount) * 8),
-      widthMinPixels: 1,
-      widthMaxPixels: 8,
-      pickable: false,
-    });
-  }
-
   private createClimateHeatmapLayer(): HeatmapLayer<ClimateAnomaly> {
     return new HeatmapLayer<ClimateAnomaly>({
       id: 'climate-heatmap-layer',
@@ -3293,11 +3266,6 @@ export class DeckGLMap {
 
   public setUcdpEvents(events: UcdpGeoEvent[]): void {
     this.ucdpEvents = events;
-    this.render();
-  }
-
-  public setDisplacementFlows(flows: DisplacementFlow[]): void {
-    this.displacementFlows = flows;
     this.render();
   }
 

@@ -104,9 +104,7 @@
         "etfFlows": "Suivi ETF BTC",
         "stablecoins": "Stablecoins",
         "ucdpEvents": "Conflits UCDP",
-        "displacement": "Déplacements HCR",
         "climate": "Anomalies climatiques",
-        "populationExposure": "Exposition de la population",
         "startups": "Startups & Capital-risque",
         "vcblogs": "Insights VC & Essais",
         "regionalStartups": "Actualités startups mondiales",
@@ -124,7 +122,6 @@
         "producthunt": "Product Hunt",
         "events": "Événements Tech",
         "serviceStatus": "État des services",
-        "techReadiness": "Indice de maturité technologique",
         "techHubs": "Pôles Technologiques",
         "gccInvestments": "Investissements du CCG",
         "geoHubs": "Centres géopolitiques"
@@ -323,7 +320,6 @@
                 "militarySea": "mil. navires",
                 "outages": "pannes",
                 "earthquakes": "tremblements de terre",
-                "displaced": "déplacé",
                 "climate": "Stress climatique",
                 "conflictEvents": "événements de conflit"
             },
@@ -389,18 +385,12 @@
             "updated": "Mis à jour"
         },
         "economic": {
-            "indicators": "Indicateurs",
             "oil": "Pétrole",
-            "gov": "Gouv",
             "noData": "Aucune donnée économique",
             "noOilData": "Données pétrolières non disponibles",
             "noOilMetrics": "Aucune métrique pétrolière. Ajoutez EIA_API_KEY pour activer.",
-            "noSpending": "Aucun marché public récent",
-            "awards": "marchés",
-            "noIndicatorData": "Aucune donnée d'indicateur pour l'instant - FRED est peut-être en cours de chargement",
             "noOilDataRetry": "Données pétrolières temporairement indisponibles - je vais réessayer",
-            "vsPreviousWeek": "par rapport à la semaine précédente",
-            "in": "dans"
+            "vsPreviousWeek": "par rapport à la semaine précédente"
         },
         "gdelt": {
             "empty": "Aucun article récent pour ce sujet"
@@ -578,7 +568,6 @@
                 "flightDelays": "Retards de vols",
                 "protests": "Manifestations",
                 "ucdpEvents": "Événements UCDP",
-                "displacementFlows": "Flux de déplacement",
                 "climateAnomalies": "Anomalies climatiques",
                 "weatherAlerts": "Alertes météo",
                 "strategicWaterways": "Voies navigables stratégiques",
@@ -735,19 +724,6 @@
             "showOnMap": "Voir sur la carte",
             "moreInfo": "Plus d'infos"
         },
-        "techReadiness": {
-            "internetUsers": "Utilisateurs Internet",
-            "mobileSubscriptions": "Abonnements mobiles",
-            "rdSpending": "Dépenses R&D",
-            "infoTooltip": "<strong>Global Tech Readiness</strong><br>Score composite (0-100) basé sur les données de la Banque mondiale :<br><br><strong>Metrics affichés :</strong><br>🌐 Utilisateurs Internet (% de la population)<br>📱 Abonnements mobiles (pour 100 personnes)<br>🔬 R&D Dépenses (% du PIB)<br><br><strong>Poids :</strong> R&D (35 %), Internet (30 %), Haut débit (20 %), Mobile (15 %)<br><br><em>— = Aucune donnée récente disponible</em><br><em>Source : Données ouvertes de la Banque mondiale (2019-2024)</em>"
-        },
-        "populationExposure": {
-            "noData": "Aucune donnée d'exposition disponible",
-            "totalAffected": "Total concerné",
-            "affectedCount": "{{count}} concerné",
-            "radiusKm": "Rayon de {{km}}km",
-            "infoTooltip": "<strong>Estimations de l'exposition de la population</strong> Population estimée dans le rayon d'impact de l'événement. Basé sur les données de densité des pays WorldPop.<ul><li>Conflit : rayon de 50 km</li><li>Tremblement de terre : rayon de 100 km</li><li>Inondation : rayon de 100 km</li><li>Incendies de forêt : rayon de 30 km</li></ul>"
-        },
         "satelliteFires": {
             "noData": "Aucune donnée d'incendie disponible",
             "region": "Région",
@@ -774,24 +750,6 @@
             "moreNotShown": "{{count}} événements supplémentaires non affichés",
             "noEvents": "Aucun événement dans cette catégorie",
             "infoTooltip": "<strong>Événements géoréférencés UCDP</strong> Données de conflit au niveau des événements de l'Université d'Uppsala.<ul><li><strong>États</strong> : gouvernement contre groupe rebelle</li><li><strong>Non étatique</strong> : groupe armé contre groupe armé</li><li><strong>Unilatéral</strong> : Violence contre les civils</li></ul>Décès indiqués comme meilleure estimation (fourchette basse-haute). Les doublons ACLED sont automatiquement filtrés."
-        },
-        "displacement": {
-            "noData": "Aucune donnée",
-            "refugees": "Réfugiés",
-            "asylumSeekers": "Demandeurs d'asile",
-            "idps": "personnes déplacées",
-            "total": "Total",
-            "origins": "Origines",
-            "hosts": "Hôtes",
-            "badges": {
-                "crisis": "CRISE",
-                "high": "HAUT",
-                "elevated": "ÉLEVÉ"
-            },
-            "country": "Pays",
-            "status": "Statut",
-            "count": "Compter",
-            "infoTooltip": "<strong>Données de déplacement du HCR</strong> Nombre mondial de réfugiés, de demandeurs d'asile et de personnes déplacées du HCR.<ul><li><strong>Origines</strong> : Pays où les gens fuient FROM</li><li><strong>Hôtes</strong> : Pays accueillant des réfugiés</li><li>Badges de crise : >1M | Élevé : > 500 000 déplacés</li></ul>Mises à jour des données chaque année. Licence CC BY 4.0."
         },
         "climate": {
             "noAnomalies": "Aucune anomalie significative détectée",

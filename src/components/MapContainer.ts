@@ -25,7 +25,6 @@ import type {
   MilitaryVesselCluster,
   NaturalEvent,
   UcdpGeoEvent,
-  DisplacementFlow,
   ClimateAnomaly,
   CyberThreat,
 } from '@/types';
@@ -275,12 +274,6 @@ export class MapContainer {
   public setUcdpEvents(events: UcdpGeoEvent[]): void {
     if (this.useDeckGL) {
       this.deckGLMap?.setUcdpEvents(events);
-    }
-  }
-
-  public setDisplacementFlows(flows: DisplacementFlow[]): void {
-    if (this.useDeckGL) {
-      this.deckGLMap?.setDisplacementFlows(flows);
     }
   }
 

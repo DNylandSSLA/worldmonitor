@@ -93,13 +93,6 @@ test.describe('desktop runtime routing guardrails', () => {
 
         calls.push(url);
 
-        if (url.includes('127.0.0.1:46123/api/fred-data')) {
-          return responseJson({ error: 'missing local api key' }, 500);
-        }
-        if (url.includes('worldmonitor.app/api/fred-data')) {
-          return responseJson({ observations: [{ value: '321.5' }] }, 200);
-        }
-
         if (url.includes('127.0.0.1:46123/api/stablecoin-markets')) {
           throw new Error('ECONNREFUSED');
         }
@@ -117,15 +110,10 @@ test.describe('desktop runtime routing guardrails', () => {
       try {
         runtime.installRuntimeFetchPatch();
 
-        const fredResponse = await window.fetch('/api/fred-data?series_id=CPIAUCSL');
-        const fredBody = await fredResponse.json() as { observations?: Array<{ value: string }> };
-
         const stableResponse = await window.fetch('/api/stablecoin-markets');
         const stableBody = await stableResponse.json() as { stablecoins?: Array<{ symbol: string }> };
 
         return {
-          fredStatus: fredResponse.status,
-          fredValue: fredBody.observations?.[0]?.value ?? null,
           stableStatus: stableResponse.status,
           stableSymbol: stableBody.stablecoins?.[0]?.symbol ?? null,
           calls,
@@ -141,13 +129,9 @@ test.describe('desktop runtime routing guardrails', () => {
       }
     });
 
-    expect(result.fredStatus).toBe(200);
-    expect(result.fredValue).toBe('321.5');
     expect(result.stableStatus).toBe(200);
     expect(result.stableSymbol).toBe('USDT');
 
-    expect(result.calls.some((url) => url.includes('127.0.0.1:46123/api/fred-data'))).toBe(true);
-    expect(result.calls.some((url) => url.includes('worldmonitor.app/api/fred-data'))).toBe(true);
     expect(result.calls.some((url) => url.includes('127.0.0.1:46123/api/stablecoin-markets'))).toBe(true);
     expect(result.calls.some((url) => url.includes('worldmonitor.app/api/stablecoin-markets'))).toBe(true);
   });

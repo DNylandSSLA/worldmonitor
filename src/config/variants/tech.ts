@@ -224,7 +224,7 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   minerals: false,
   fires: false,
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech-specific layers
   startupHubs: true,
@@ -265,7 +265,7 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   minerals: false,
   fires: false,
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech-specific layers (limited on mobile)
   startupHubs: true,

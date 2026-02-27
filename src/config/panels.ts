@@ -40,9 +40,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
   'ucdp-events': { name: 'UCDP Conflict Events', enabled: true, priority: 2 },
-  displacement: { name: 'UNHCR Displacement', enabled: true, priority: 2 },
   climate: { name: 'Climate Anomalies', enabled: true, priority: 2 },
-  'population-exposure': { name: 'Population Exposure', enabled: true, priority: 2 },
 };
 
 const FULL_MAP_LAYERS: MapLayers = {
@@ -70,7 +68,7 @@ const FULL_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled in full variant)
   startupHubs: false,
@@ -111,7 +109,7 @@ const FULL_MOBILE_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled in full variant)
   startupHubs: false,
@@ -159,7 +157,6 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   events: { name: 'Tech Events', enabled: true, priority: 1 },
   'service-status': { name: 'Service Status', enabled: true, priority: 2 },
   economic: { name: 'Economic Indicators', enabled: true, priority: 2 },
-  'tech-readiness': { name: 'Tech Readiness Index', enabled: true, priority: 1 },
   'macro-signals': { name: 'Market Radar', enabled: true, priority: 2 },
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
@@ -191,7 +188,7 @@ const TECH_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (enabled in tech variant)
   startupHubs: true,
@@ -232,7 +229,7 @@ const TECH_MOBILE_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (limited on mobile)
   startupHubs: true,
@@ -307,7 +304,7 @@ const FINANCE_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled in finance variant)
   startupHubs: false,
@@ -348,7 +345,7 @@ const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
   fires: false,
   // Data source layers
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled)
   startupHubs: false,

@@ -5,7 +5,7 @@ import { focalPointDetector } from './focal-point-detector';
 import type { ConflictEvent } from './conflicts';
 import type { UcdpConflictStatus } from './ucdp';
 import type { HapiConflictSummary } from './hapi';
-import type { CountryDisplacement, ClimateAnomaly } from '@/types';
+import type { ClimateAnomaly } from '@/types';
 import { getCountryAtCoordinates } from './country-geometry';
 
 export interface CountryScore {
@@ -240,39 +240,6 @@ export function ingestHapiForCII(summaries: Map<string, HapiConflictSummary>): v
     if (!TIER1_COUNTRIES[code]) continue;
     if (!countryDataMap.has(code)) countryDataMap.set(code, initCountryData());
     countryDataMap.get(code)!.hapiSummary = summary;
-  }
-}
-
-const ISO3_TO_ISO2: Record<string, string> = {
-  AFG: 'AF', SYR: 'SY', UKR: 'UA', SDN: 'SD', SSD: 'SS', SOM: 'SO',
-  COD: 'CD', MMR: 'MM', YEM: 'YE', ETH: 'ET', VEN: 'VE', IRQ: 'IQ',
-  COL: 'CO', NGA: 'NG', PSE: 'PS', TUR: 'TR', PAK: 'PK', IRN: 'IR',
-  IND: 'IN', CHN: 'CN', RUS: 'RU', ISR: 'IL', SAU: 'SA', USA: 'US',
-  TWN: 'TW', PRK: 'KP', POL: 'PL', DEU: 'DE', FRA: 'FR', GBR: 'GB',
-};
-
-const COUNTRY_NAME_TO_ISO: Record<string, string> = {
-  'Afghanistan': 'AF', 'Syria': 'SY', 'Ukraine': 'UA', 'Sudan': 'SD',
-  'South Sudan': 'SS', 'Somalia': 'SO', 'DR Congo': 'CD', 'Myanmar': 'MM',
-  'Yemen': 'YE', 'Ethiopia': 'ET', 'Venezuela': 'VE', 'Iraq': 'IQ',
-  'Colombia': 'CO', 'Nigeria': 'NG', 'Palestine': 'PS', 'Turkey': 'TR',
-  'Pakistan': 'PK', 'Iran': 'IR', 'India': 'IN', 'China': 'CN',
-  'Russia': 'RU', 'Israel': 'IL', 'Saudi Arabia': 'SA',
-};
-
-export function ingestDisplacementForCII(countries: CountryDisplacement[]): void {
-  for (const data of countryDataMap.values()) {
-    data.displacementOutflow = 0;
-  }
-
-  for (const c of countries) {
-    const code = c.code?.length === 3
-      ? ISO3_TO_ISO2[c.code] || c.code.substring(0, 2)
-      : COUNTRY_NAME_TO_ISO[c.name] || c.code;
-    if (!code || !TIER1_COUNTRIES[code]) continue;
-    if (!countryDataMap.has(code)) countryDataMap.set(code, initCountryData());
-    const outflow = c.refugees + c.asylumSeekers;
-    countryDataMap.get(code)!.displacementOutflow = outflow;
   }
 }
 

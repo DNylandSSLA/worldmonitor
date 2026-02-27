@@ -195,7 +195,7 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   minerals: false,
   fires: false,
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled in finance variant)
   startupHubs: false,
@@ -236,7 +236,7 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   minerals: false,
   fires: false,
   ucdpEvents: false,
-  displacement: false,
+
   climate: false,
   // Tech layers (disabled)
   startupHubs: false,

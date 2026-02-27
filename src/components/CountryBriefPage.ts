@@ -169,12 +169,6 @@ export class CountryBriefPage {
     if (signals.militaryVessels > 0) chips.push(`<span class="signal-chip military">⚓ ${signals.militaryVessels} ${t('modals.countryBrief.signals.militarySea')}</span>`);
     if (signals.outages > 0) chips.push(`<span class="signal-chip outage">🌐 ${signals.outages} ${t('modals.countryBrief.signals.outages')}</span>`);
     if (signals.earthquakes > 0) chips.push(`<span class="signal-chip quake">🌍 ${signals.earthquakes} ${t('modals.countryBrief.signals.earthquakes')}</span>`);
-    if (signals.displacementOutflow > 0) {
-      const fmt = signals.displacementOutflow >= 1_000_000
-        ? `${(signals.displacementOutflow / 1_000_000).toFixed(1)}M`
-        : `${(signals.displacementOutflow / 1000).toFixed(0)}K`;
-      chips.push(`<span class="signal-chip displacement">🌊 ${fmt} ${t('modals.countryBrief.signals.displaced')}</span>`);
-    }
     if (signals.climateStress > 0) chips.push(`<span class="signal-chip climate">🌡️ ${t('modals.countryBrief.signals.climate')}</span>`);
     if (signals.conflictEvents > 0) chips.push(`<span class="signal-chip conflict">⚔️ ${signals.conflictEvents} ${t('modals.countryBrief.signals.conflictEvents')}</span>`);
     chips.push(`<span class="signal-chip stock-loading">📈 ${t('modals.countryBrief.loadingIndex')}</span>`);
@@ -590,7 +584,6 @@ export class CountryBriefPage {
         militaryVessels: this.currentSignals.militaryVessels,
         outages: this.currentSignals.outages,
         earthquakes: this.currentSignals.earthquakes,
-        displacementOutflow: this.currentSignals.displacementOutflow,
         climateStress: this.currentSignals.climateStress,
         conflictEvents: this.currentSignals.conflictEvents,
       };

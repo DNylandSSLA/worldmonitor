@@ -9,7 +9,7 @@ export * from './velocity';
 export * from './storage';
 export * from './correlation';
 export * from './weather';
-export * from './fred';
+
 export * from './outages';
 export * from './cyber-threats';
 export * from './ais';
@@ -27,7 +27,7 @@ export * from './country-instability';
 export * from './infrastructure-cascade';
 export * from './cross-module-integration';
 export * from './data-freshness';
-export * from './usa-spending';
+
 export * from './oil-analytics';
 export { generateSummary, translateText } from './summarization';
 export * from './cached-theater-posture';

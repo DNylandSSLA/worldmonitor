@@ -13,7 +13,7 @@ import {
   SITE_VARIANT,
 } from '@/config';
 import { BETA_MODE } from '@/config/beta';
-import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchFredData, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchPizzIntStatus, fetchGdeltTensions, fetchNaturalEvents, fetchRecentAwards, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals } from '@/services';
+import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchPizzIntStatus, fetchGdeltTensions, fetchNaturalEvents, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals } from '@/services';
 import { fetchCountryMarkets } from '@/services/polymarket';
 import { mlWorker } from '@/services/ml-worker';
 import { clusterNewsHybrid } from '@/services/clustering';
@@ -24,17 +24,15 @@ import { fetchAllFires, flattenFires, computeRegionStats } from '@/services/firm
 import { SatelliteFiresPanel } from '@/components/SatelliteFiresPanel';
 import { analyzeFlightsForSurge, surgeAlertToSignal, detectForeignMilitaryPresence, foreignPresenceToSignal, type TheaterPostureSummary } from '@/services/military-surge';
 import { fetchCachedTheaterPosture } from '@/services/cached-theater-posture';
-import { ingestProtestsForCII, ingestMilitaryForCII, ingestNewsForCII, ingestOutagesForCII, ingestConflictsForCII, ingestUcdpForCII, ingestHapiForCII, ingestDisplacementForCII, ingestClimateForCII, startLearning, isInLearningMode, calculateCII, getCountryData, TIER1_COUNTRIES } from '@/services/country-instability';
+import { ingestProtestsForCII, ingestMilitaryForCII, ingestNewsForCII, ingestOutagesForCII, ingestConflictsForCII, ingestUcdpForCII, ingestHapiForCII, ingestClimateForCII, startLearning, isInLearningMode, calculateCII, getCountryData, TIER1_COUNTRIES } from '@/services/country-instability';
 import { dataFreshness, type DataSourceId } from '@/services/data-freshness';
 import { focusInvestmentOnMap } from '@/services/investments-focus';
 import { fetchConflictEvents } from '@/services/conflicts';
 import { fetchUcdpClassifications } from '@/services/ucdp';
 import { fetchHapiSummary } from '@/services/hapi';
 import { fetchUcdpEvents, deduplicateAgainstAcled } from '@/services/ucdp-events';
-import { fetchUnhcrPopulation } from '@/services/unhcr';
 import { fetchClimateAnomalies } from '@/services/climate';
-import { enrichEventsWithExposure } from '@/services/population-exposure';
-import { buildMapUrl, debounce, loadFromStorage, parseMapUrlState, saveToStorage, ExportPanel, getCircuitBreakerCooldownInfo, isMobileDevice, setTheme, getCurrentTheme } from '@/utils';
+import { buildMapUrl, debounce, loadFromStorage, parseMapUrlState, saveToStorage, ExportPanel, isMobileDevice, setTheme, getCurrentTheme } from '@/utils';
 import { reverseGeocode } from '@/utils/reverse-geocode';
 import { CountryBriefPage } from '@/components/CountryBriefPage';
 import { maybeShowDownloadBanner } from '@/components/DownloadBanner';
@@ -72,14 +70,11 @@ import {
   ServiceStatusPanel,
   RuntimeConfigPanel,
   InsightsPanel,
-  TechReadinessPanel,
   MacroSignalsPanel,
   ETFFlowsPanel,
   StablecoinPanel,
   UcdpEventsPanel,
-  DisplacementPanel,
   ClimateAnomalyPanel,
-  PopulationExposurePanel,
   InvestmentsPanel,
   LanguageSelector,
 } from '@/components';
@@ -97,7 +92,6 @@ import { STARTUP_ECOSYSTEMS } from '@/config/startup-ecosystems';
 import { TECH_HQS, ACCELERATORS } from '@/config/tech-geo';
 import { STOCK_EXCHANGES, FINANCIAL_CENTERS, CENTRAL_BANKS, COMMODITY_HUBS } from '@/config/finance-geo';
 import { isDesktopRuntime } from '@/services/runtime';
-import { isFeatureAvailable } from '@/services/runtime-config';
 import { invokeTauri } from '@/services/tauri-bridge';
 import { getCountryAtCoordinates, hasCountryGeometry, isCoordinateInCountry, preloadCountryGeometry } from '@/services/country-geometry';
 import { initI18n, t, changeLanguage } from '@/services/i18n';
@@ -122,7 +116,6 @@ export interface CountryBriefSignals {
   militaryVessels: number;
   outages: number;
   earthquakes: number;
-  displacementOutflow: number;
   climateStress: number;
   conflictEvents: number;
   isTier1: boolean;
@@ -609,7 +602,7 @@ export class App {
       cyberThreats: ['cyber_threats'],
       protests: ['acled'],
       ucdpEvents: ['ucdp_events'],
-      displacement: ['unhcr'],
+
       climate: ['climate'],
     };
 
@@ -646,7 +639,7 @@ export class App {
         cyberThreats: ['cyber_threats'],
         protests: ['acled'],
         ucdpEvents: ['ucdp_events'],
-        displacement: ['unhcr'],
+  
         climate: ['climate'],
       };
       const sourceIds = layerToSource[layer];
@@ -1119,7 +1112,6 @@ export class App {
       militaryVessels,
       outages,
       earthquakes,
-      displacementOutflow: ciiData?.displacementOutflow ?? 0,
       climateStress: ciiData?.climateStress ?? 0,
       conflictEvents: ciiData?.conflicts?.length ?? 0,
       isTier1,
@@ -2153,20 +2145,12 @@ export class App {
       });
       this.panels['ucdp-events'] = ucdpEventsPanel;
 
-      const displacementPanel = new DisplacementPanel();
-      displacementPanel.setCountryClickHandler((lat, lon) => {
-        this.map?.setCenter(lat, lon, 4);
-      });
-      this.panels['displacement'] = displacementPanel;
-
       const climatePanel = new ClimateAnomalyPanel();
       climatePanel.setZoneClickHandler((lat, lon) => {
         this.map?.setCenter(lat, lon, 4);
       });
       this.panels['climate'] = climatePanel;
 
-      const populationExposurePanel = new PopulationExposurePanel();
-      this.panels['population-exposure'] = populationExposurePanel;
     }
 
     // GCC Investments Panel (finance variant)
@@ -2191,10 +2175,6 @@ export class App {
       const runtimeConfigPanel = new RuntimeConfigPanel({ mode: 'alert' });
       this.panels['runtime-config'] = runtimeConfigPanel;
     }
-
-    // Tech Readiness Panel (tech variant only - World Bank tech indicators)
-    const techReadinessPanel = new TechReadinessPanel();
-    this.panels['tech-readiness'] = techReadinessPanel;
 
     // Crypto & Market Intelligence Panels
     this.panels['macro-signals'] = new MacroSignalsPanel();
@@ -2895,9 +2875,7 @@ export class App {
       { name: 'markets', task: runGuarded('markets', () => this.loadMarkets()) },
       { name: 'predictions', task: runGuarded('predictions', () => this.loadPredictions()) },
       { name: 'pizzint', task: runGuarded('pizzint', () => this.loadPizzInt()) },
-      { name: 'fred', task: runGuarded('fred', () => this.loadFredData()) },
       { name: 'oil', task: runGuarded('oil', () => this.loadOilAnalytics()) },
-      { name: 'spending', task: runGuarded('spending', () => this.loadGovernmentSpending()) },
     ];
 
     // Load intelligence signals for CII calculation (protests, military, outages)
@@ -2917,11 +2895,6 @@ export class App {
     if (this.mapLayers.flights) tasks.push({ name: 'flights', task: runGuarded('flights', () => this.loadFlightDelays()) });
     if (CYBER_LAYER_ENABLED && this.mapLayers.cyberThreats) tasks.push({ name: 'cyberThreats', task: runGuarded('cyberThreats', () => this.loadCyberThreats()) });
     if (this.mapLayers.techEvents || SITE_VARIANT === 'tech') tasks.push({ name: 'techEvents', task: runGuarded('techEvents', () => this.loadTechEvents()) });
-
-    // Tech Readiness panel (tech variant only)
-    if (SITE_VARIANT === 'tech') {
-      tasks.push({ name: 'techReadiness', task: runGuarded('techReadiness', () => (this.panels['tech-readiness'] as TechReadinessPanel)?.refresh()) });
-    }
 
     // Use allSettled to ensure all tasks complete and search index always updates
     const results = await Promise.allSettled(tasks.map(t => t.task));
@@ -2979,7 +2952,6 @@ export class App {
           console.log('[loadDataForLayer] techEvents loaded');
           break;
         case 'ucdpEvents':
-        case 'displacement':
         case 'climate':
           await this.loadIntelligenceSignals();
           break;
@@ -3692,27 +3664,6 @@ export class App {
       }
     })());
 
-    // Fetch UNHCR displacement data (refugees, asylum seekers, IDPs)
-    tasks.push((async () => {
-      try {
-        const unhcrResult = await fetchUnhcrPopulation();
-        if (!unhcrResult.ok) {
-          dataFreshness.recordError('unhcr', 'UNHCR displacement unavailable (retaining prior displacement state)');
-          return;
-        }
-        const data = unhcrResult.data;
-        (this.panels['displacement'] as DisplacementPanel)?.setData(data);
-        ingestDisplacementForCII(data.countries);
-        if (this.mapLayers.displacement && data.topFlows) {
-          this.map?.setDisplacementFlows(data.topFlows);
-        }
-        if (data.countries.length > 0) dataFreshness.recordUpdate('unhcr', data.countries.length);
-      } catch (error) {
-        console.error('[Intelligence] UNHCR displacement fetch failed:', error);
-        dataFreshness.recordError('unhcr', String(error));
-      }
-    })());
-
     // Fetch climate anomalies (temperature/precipitation deviations)
     tasks.push((async () => {
       try {
@@ -3735,28 +3686,6 @@ export class App {
     })());
 
     await Promise.allSettled(tasks);
-
-    // Fetch population exposure estimates after upstream intelligence loads complete.
-    // This avoids race conditions where UCDP/protest data is still in-flight.
-    try {
-      const ucdpEvts = (this.panels['ucdp-events'] as UcdpEventsPanel)?.getEvents?.() || [];
-      const events = [
-        ...(this.intelligenceCache.protests?.events || []).slice(0, 10).map(e => ({
-          id: e.id, lat: e.lat, lon: e.lon, type: 'conflict' as const, name: e.title || 'Protest',
-        })),
-        ...ucdpEvts.slice(0, 10).map(e => ({
-          id: e.id, lat: e.latitude, lon: e.longitude, type: e.type_of_violence as string, name: `${e.side_a} vs ${e.side_b}`,
-        })),
-      ];
-      if (events.length > 0) {
-        const exposures = await enrichEventsWithExposure(events);
-        (this.panels['population-exposure'] as PopulationExposurePanel)?.setExposures(exposures);
-        if (exposures.length > 0) dataFreshness.recordUpdate('worldpop', exposures.length);
-      }
-    } catch (error) {
-      console.error('[Intelligence] Population exposure fetch failed:', error);
-      dataFreshness.recordError('worldpop', String(error));
-    }
 
     // Now trigger CII refresh with all intelligence data
     (this.panels['cii'] as CIIPanel)?.refresh();
@@ -4075,47 +4004,6 @@ export class App {
   }
 
 
-  private async loadFredData(): Promise<void> {
-    const economicPanel = this.panels['economic'] as EconomicPanel;
-    const cbInfo = getCircuitBreakerCooldownInfo('FRED Economic');
-    if (cbInfo.onCooldown) {
-      economicPanel?.setErrorState(true, `Temporarily unavailable (retry in ${cbInfo.remainingSeconds}s)`);
-      this.statusPanel?.updateApi('FRED', { status: 'error' });
-      return;
-    }
-
-    try {
-      economicPanel?.setLoading(true);
-      const data = await fetchFredData();
-
-      // Check if circuit breaker tripped after fetch
-      const postInfo = getCircuitBreakerCooldownInfo('FRED Economic');
-      if (postInfo.onCooldown) {
-        economicPanel?.setErrorState(true, `Temporarily unavailable (retry in ${postInfo.remainingSeconds}s)`);
-        this.statusPanel?.updateApi('FRED', { status: 'error' });
-        return;
-      }
-
-      if (data.length === 0) {
-        const reason = isFeatureAvailable('economicFred')
-          ? 'FRED data temporarily unavailable — will retry'
-          : 'FRED_API_KEY not configured — add in Settings';
-        economicPanel?.setErrorState(true, reason);
-        this.statusPanel?.updateApi('FRED', { status: 'error' });
-        return;
-      }
-
-      economicPanel?.setErrorState(false);
-      economicPanel?.update(data);
-      this.statusPanel?.updateApi('FRED', { status: 'ok' });
-      dataFreshness.recordUpdate('economic', data.length);
-    } catch {
-      this.statusPanel?.updateApi('FRED', { status: 'error' });
-      economicPanel?.setErrorState(true, 'FRED data temporarily unavailable — will retry');
-      economicPanel?.setLoading(false);
-    }
-  }
-
   private async loadOilAnalytics(): Promise<void> {
     const economicPanel = this.panels['economic'] as EconomicPanel;
     try {
@@ -4126,18 +4014,6 @@ export class App {
     } catch (e) {
       console.error('[App] Oil analytics failed:', e);
       this.statusPanel?.updateApi('EIA', { status: 'error' });
-    }
-  }
-
-  private async loadGovernmentSpending(): Promise<void> {
-    const economicPanel = this.panels['economic'] as EconomicPanel;
-    try {
-      const data = await fetchRecentAwards({ daysBack: 7, limit: 15 });
-      economicPanel?.updateSpending(data);
-      this.statusPanel?.updateApi('USASpending', { status: data.awards.length > 0 ? 'ok' : 'error' });
-    } catch (e) {
-      console.error('[App] Government spending failed:', e);
-      this.statusPanel?.updateApi('USASpending', { status: 'error' });
     }
   }
 
@@ -4297,9 +4173,7 @@ export class App {
     // Only refresh layer data if layer is enabled
     this.scheduleRefresh('natural', () => this.loadNatural(), 5 * 60 * 1000, () => this.mapLayers.natural);
     this.scheduleRefresh('weather', () => this.loadWeatherAlerts(), 10 * 60 * 1000, () => this.mapLayers.weather);
-    this.scheduleRefresh('fred', () => this.loadFredData(), 30 * 60 * 1000);
     this.scheduleRefresh('oil', () => this.loadOilAnalytics(), 30 * 60 * 1000);
-    this.scheduleRefresh('spending', () => this.loadGovernmentSpending(), 60 * 60 * 1000);
 
     // Refresh intelligence signals for CII (geopolitical variant only)
     // This handles outages, protests, military - updates map when layers enabled

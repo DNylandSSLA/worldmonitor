@@ -18,17 +18,13 @@ export type DataSourceId =
   | 'outages'    // Internet outages
   | 'cyber_threats' // Cyber threat IOC layer
   | 'weather'    // Weather alerts
-  | 'economic'   // Economic indicators (FRED)
   | 'oil'        // EIA oil analytics
-  | 'spending'        // USASpending.gov
   | 'firms'          // NASA FIRMS satellite fires
   | 'acled_conflict' // ACLED battles/explosions/violence
   | 'ucdp'           // UCDP conflict classification
   | 'hapi'           // HDX HAPI aggregated conflict data
   | 'ucdp_events'    // UCDP georeferenced conflict events
-  | 'unhcr'          // UNHCR displacement data
-  | 'climate'        // Climate anomaly data (Open-Meteo)
-  | 'worldpop';      // WorldPop population exposure
+  | 'climate';       // Climate anomaly data (Open-Meteo)
 
 export type FreshnessStatus = 'fresh' | 'stale' | 'very_stale' | 'no_data' | 'disabled' | 'error';
 
@@ -76,17 +72,13 @@ const SOURCE_METADATA: Record<DataSourceId, { name: string; requiredForRisk: boo
   outages: { name: 'Internet Outages', requiredForRisk: false, panelId: 'outages' },
   cyber_threats: { name: 'Cyber Threat IOCs', requiredForRisk: false, panelId: 'map' },
   weather: { name: 'Weather Alerts', requiredForRisk: false, panelId: 'weather' },
-  economic: { name: 'Economic Data (FRED)', requiredForRisk: false, panelId: 'economic' },
   oil: { name: 'Oil Analytics (EIA)', requiredForRisk: false, panelId: 'economic' },
-  spending: { name: 'Gov Spending', requiredForRisk: false, panelId: 'economic' },
   firms: { name: 'FIRMS Satellite Fires', requiredForRisk: false, panelId: 'map' },
   acled_conflict: { name: 'Armed Conflicts (ACLED)', requiredForRisk: false, panelId: 'protests' },
   ucdp: { name: 'Conflict Classification (UCDP)', requiredForRisk: false, panelId: 'protests' },
   hapi: { name: 'Conflict Aggregates (HDX)', requiredForRisk: false, panelId: 'protests' },
   ucdp_events: { name: 'UCDP Conflict Events', requiredForRisk: false, panelId: 'ucdp-events' },
-  unhcr: { name: 'UNHCR Displacement', requiredForRisk: false, panelId: 'displacement' },
   climate: { name: 'Climate Anomalies', requiredForRisk: false, panelId: 'climate' },
-  worldpop: { name: 'Population Exposure', requiredForRisk: false, panelId: 'population-exposure' },
 };
 
 class DataFreshnessTracker {
@@ -327,17 +319,13 @@ const INTELLIGENCE_GAP_MESSAGES: Record<DataSourceId, string> = {
   outages: 'Internet disruptions may be unreported—outage monitoring offline',
   cyber_threats: 'Cyber IOC map points unavailable—malicious infrastructure visibility reduced',
   weather: 'Severe weather warnings may be missed—weather alerts unavailable',
-  economic: 'Economic indicators stale—Fed/Treasury data not updating',
   oil: 'Oil market analytics unavailable—EIA data not updating',
-  spending: 'Government spending data unavailable',
   firms: 'Satellite fire detection unavailable—NASA FIRMS data not updating',
   acled_conflict: 'Armed conflict events may be missed—ACLED conflict data unavailable',
   ucdp: 'Conflict classification unavailable—UCDP data not loading',
   hapi: 'Aggregated conflict data unavailable—HDX HAPI not responding',
   ucdp_events: 'UCDP event-level conflict data unavailable',
-  unhcr: 'UNHCR displacement data unavailable—refugee flows unknown',
   climate: 'Climate anomaly data unavailable—extreme weather patterns undetected',
-  worldpop: 'Population exposure data unavailable—affected population unknown',
 };
 
 /**
