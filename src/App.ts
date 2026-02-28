@@ -13,7 +13,7 @@ import {
   SITE_VARIANT,
 } from '@/config';
 import { BETA_MODE } from '@/config/beta';
-import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchPizzIntStatus, fetchGdeltTensions, fetchNaturalEvents, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals } from '@/services';
+import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchNaturalEvents, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals } from '@/services';
 import { fetchCountryMarkets } from '@/services/polymarket';
 import { mlWorker } from '@/services/ml-worker';
 import { clusterNewsHybrid } from '@/services/clustering';
@@ -34,8 +34,6 @@ import { fetchClimateAnomalies } from '@/services/climate';
 import { buildMapUrl, debounce, loadFromStorage, parseMapUrlState, saveToStorage, ExportPanel, isMobileDevice, setTheme, getCurrentTheme } from '@/utils';
 import { reverseGeocode } from '@/utils/reverse-geocode';
 import { CountryBriefPage } from '@/components/CountryBriefPage';
-import { maybeShowDownloadBanner } from '@/components/DownloadBanner';
-import { mountCommunityWidget } from '@/components/CommunityWidget';
 import { CountryTimeline, type TimelineEvent } from '@/components/CountryTimeline';
 import { escapeHtml } from '@/utils/sanitize';
 import type { ParsedMapUrlState } from '@/utils';
@@ -57,7 +55,6 @@ import {
   EconomicPanel,
   SearchModal,
   MobileWarningModal,
-  PizzIntIndicator,
   GdeltIntelPanel,
   LiveNewsPanel,
   CIIPanel,
@@ -132,7 +129,6 @@ export class App {
   private languageSelector: LanguageSelector | null = null;
   private searchModal: SearchModal | null = null;
   private mobileWarningModal: MobileWarningModal | null = null;
-  private pizzintIndicator: PizzIntIndicator | null = null;
   private latestPredictions: PredictionMarket[] = [];
   private latestMarkets: MarketData[] = [];
   private latestClusters: ClusteredEvent[] = [];
@@ -314,7 +310,6 @@ export class App {
     this.setupMobileWarning();
     this.setupPlaybackControl();
     this.setupStatusPanel();
-    this.setupPizzIntIndicator();
     this.setupExportPanel();
     this.setupLanguageSelector();
     this.setupSearchModal();
@@ -519,41 +514,6 @@ export class App {
     }
   }
 
-  private setupPizzIntIndicator(): void {
-    // Skip DEFCON indicator for tech/startup and finance variants
-    if (SITE_VARIANT === 'tech' || SITE_VARIANT === 'finance') return;
-
-    this.pizzintIndicator = new PizzIntIndicator();
-    const headerLeft = this.container.querySelector('.header-left');
-    if (headerLeft) {
-      headerLeft.appendChild(this.pizzintIndicator.getElement());
-    }
-  }
-
-  private async loadPizzInt(): Promise<void> {
-    try {
-      const [status, tensions] = await Promise.all([
-        fetchPizzIntStatus(),
-        fetchGdeltTensions()
-      ]);
-
-      // Hide indicator if no valid data (API returned default/empty)
-      if (status.locationsMonitored === 0) {
-        this.pizzintIndicator?.hide();
-        this.statusPanel?.updateApi('PizzINT', { status: 'error' });
-        return;
-      }
-
-      this.pizzintIndicator?.show();
-      this.pizzintIndicator?.updateStatus(status);
-      this.pizzintIndicator?.updateTensions(tensions);
-      this.statusPanel?.updateApi('PizzINT', { status: 'ok' });
-    } catch (error) {
-      console.error('[App] PizzINT load failed:', error);
-      this.pizzintIndicator?.hide();
-      this.statusPanel?.updateApi('PizzINT', { status: 'error' });
-    }
-  }
 
   private setupExportPanel(): void {
     this.exportPanel = new ExportPanel(() => ({
@@ -2688,7 +2648,6 @@ export class App {
       { name: 'news', task: runGuarded('news', () => this.loadNews()) },
       { name: 'markets', task: runGuarded('markets', () => this.loadMarkets()) },
       { name: 'predictions', task: runGuarded('predictions', () => this.loadPredictions()) },
-      { name: 'pizzint', task: runGuarded('pizzint', () => this.loadPizzInt()) },
       { name: 'oil', task: runGuarded('oil', () => this.loadOilAnalytics()) },
     ];
 
@@ -3036,8 +2995,6 @@ export class App {
 
     this.allNews = collectedNews;
     this.initialLoadComplete = true;
-    maybeShowDownloadBanner();
-    mountCommunityWidget();
     // Temporal baseline: report news volume
     updateAndCheck([
       { type: 'news', region: 'global', count: collectedNews.length },
@@ -3917,7 +3874,6 @@ export class App {
     this.scheduleRefresh('news', () => this.loadNews(), REFRESH_INTERVALS.feeds);
     this.scheduleRefresh('markets', () => this.loadMarkets(), REFRESH_INTERVALS.markets);
     this.scheduleRefresh('predictions', () => this.loadPredictions(), REFRESH_INTERVALS.predictions);
-    this.scheduleRefresh('pizzint', () => this.loadPizzInt(), 10 * 60 * 1000);
 
     // Only refresh layer data if layer is enabled
     this.scheduleRefresh('natural', () => this.loadNatural(), 5 * 60 * 1000, () => this.mapLayers.natural);

@@ -106,7 +106,18 @@ export const SOURCE_TIERS: Record<string, number> = {
   'Layoffs.fyi': 3,
   'BBC Persian': 2,
   'Iran International': 3,
+  'Iran International Intel': 3,
   'Fars News': 3,
+  'The Intercept': 3,
+  'Recorded Future': 3,
+  'CTC Sentinel': 3,
+  'Long War Journal': 3,
+  'IISS': 2,
+  'Jane\'s Defence Weekly': 2,
+  'Al-Monitor': 2,
+  'Middle East Eye': 3,
+  'Jerusalem Post Defense': 3,
+  'Times of Israel': 2,
   'MIIT (China)': 1,
   'MOFCOM (China)': 1,
 
@@ -923,6 +934,22 @@ export const INTEL_SOURCES: Feed[] = [
   // OSINT & Monitoring (Tier 2)
   { name: 'Bellingcat', url: rss('https://www.bellingcat.com/feed/'), type: 'osint' },
   { name: 'Krebs Security', url: rss('https://krebsonsecurity.com/feed/'), type: 'cyber' },
+  { name: 'The Intercept', url: rss('https://theintercept.com/feed/?rss'), type: 'osint' },
+  { name: 'Recorded Future', url: rss('https://www.recordedfuture.com/feed'), type: 'cyber' },
+
+  // Conflict & Crisis Monitoring (Tier 2)
+  { name: 'CTC Sentinel', url: rss('https://ctc.westpoint.edu/feed/'), type: 'defense' },
+  { name: 'Long War Journal', url: rss('https://www.longwarjournal.org/feed'), type: 'defense' },
+  { name: 'IISS', url: rss('https://news.google.com/rss/search?q=site:iiss.org+when:7d&hl=en-US&gl=US&ceid=US:en'), type: 'defense' },
+  { name: 'Jane\'s Defence Weekly', url: rss('https://news.google.com/rss/search?q=site:janes.com+defense+military+when:3d&hl=en-US&gl=US&ceid=US:en'), type: 'defense' },
+  { name: 'War on the Rocks', url: rss('https://warontherocks.com/feed/'), type: 'defense' },
+
+  // Iran/Middle East Specific (Tier 2-3)
+  { name: 'Iran International Intel', url: rss('https://news.google.com/rss/search?q=site:iranintl.com+military+OR+IRGC+OR+nuclear+when:3d&hl=en-US&gl=US&ceid=US:en'), type: 'intl' },
+  { name: 'Al-Monitor', url: rss('https://news.google.com/rss/search?q=site:al-monitor.com+Iran+OR+Israel+when:3d&hl=en-US&gl=US&ceid=US:en'), type: 'intl' },
+  { name: 'Middle East Eye', url: rss('https://news.google.com/rss/search?q=site:middleeasteye.net+when:2d&hl=en-US&gl=US&ceid=US:en'), type: 'intl' },
+  { name: 'Jerusalem Post Defense', url: rss('https://news.google.com/rss/search?q=site:jpost.com+Iran+OR+IDF+OR+military+when:2d&hl=en-US&gl=US&ceid=US:en'), type: 'defense' },
+  { name: 'Times of Israel', url: rss('https://news.google.com/rss/search?q=site:timesofisrael.com+Iran+OR+military+when:2d&hl=en-US&gl=US&ceid=US:en'), type: 'intl' },
 
   // Economic & Food Security (Tier 2)
   { name: 'FAO News', url: rss('https://www.fao.org/feeds/fao-newsroom-rss'), type: 'economic' },
