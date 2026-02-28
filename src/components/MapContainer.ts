@@ -3,7 +3,7 @@
  * Renders DeckGLMap (WebGL) on desktop, fallback to D3/SVG MapComponent on mobile
  */
 import { isMobileDevice } from '@/utils';
-import { MapComponent } from './Map';
+import type { MapComponent } from './Map';
 import { DeckGLMap, type DeckMapView, type CountryClickPayload } from './DeckGLMap';
 import type {
   MapLayers,
@@ -86,8 +86,13 @@ export class MapContainer {
     } else {
       console.log('[MapContainer] Initializing SVG map (mobile/fallback mode)');
       this.container.classList.add('svg-mode');
-      this.svgMap = new MapComponent(this.container, this.initialState);
+      this.initSvgMap();
     }
+  }
+
+  private async initSvgMap(): Promise<void> {
+    const { MapComponent } = await import('./Map');
+    this.svgMap = new MapComponent(this.container, this.initialState);
   }
 
   // Unified public API - delegates to active map implementation

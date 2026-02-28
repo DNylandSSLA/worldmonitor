@@ -38,7 +38,7 @@ import { HeatmapLayer } from '@deck.gl/aggregation-layers';
 import type { WeatherAlert } from '@/services/weather';
 import { escapeHtml } from '@/utils/sanitize';
 import { t } from '@/services/i18n';
-import { debounce, rafSchedule, getCurrentTheme } from '@/utils/index';
+import { debounce, throttle, rafSchedule, getCurrentTheme } from '@/utils/index';
 import {
   INTEL_HOTSPOTS,
   CONFLICT_ZONES,
@@ -3091,7 +3091,7 @@ export class DeckGLMap {
     const map = this.maplibreMap;
     let hoveredName: string | null = null;
 
-    map.on('mousemove', (e) => {
+    map.on('mousemove', throttle((e: maplibregl.MapMouseEvent) => {
       if (!this.onCountryClick) return;
       const features = map.queryRenderedFeatures(e.point, { layers: ['country-interactive'] });
       const name = features?.[0]?.properties?.name as string | undefined;
@@ -3105,7 +3105,7 @@ export class DeckGLMap {
         map.setFilter('country-hover-fill', ['==', ['get', 'name'], '']);
         map.getCanvas().style.cursor = '';
       }
-    });
+    }, 32));
 
     map.on('mouseout', () => {
       if (hoveredName) {

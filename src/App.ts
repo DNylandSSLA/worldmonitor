@@ -286,9 +286,6 @@ export class App {
     await initDB();
     await initI18n();
 
-    // Initialize ML worker (desktop only - automatically disabled on mobile)
-    await mlWorker.init();
-
     // Check AIS configuration before init
     if (!isAisConfigured()) {
       this.mapLayers.ais = false;
@@ -297,6 +294,9 @@ export class App {
     }
 
     this.renderLayout();
+
+    // Initialize ML worker after render (fire-and-forget — consumers guard with isReady)
+    mlWorker.init().catch((err) => console.warn('[App] ML worker init failed:', err));
     this.startHeaderClock();
     this.signalModal = new SignalModal();
     this.signalModal.setLocationClickHandler((lat, lon) => {
@@ -326,8 +326,7 @@ export class App {
     this.pendingDeepLinkCountry = initState.country ?? null;
     this.setupUrlStateSync();
     this.syncDataFreshnessWithLayers();
-    await preloadCountryGeometry();
-    await this.loadAllData();
+    await Promise.all([preloadCountryGeometry(), this.loadAllData()]);
 
     // Start CII learning mode after first data load
     startLearning();

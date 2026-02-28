@@ -50,7 +50,7 @@ export function getHeatmapClass(change: number): string {
   return `${direction}-1`;
 }
 
-export function debounce<T extends (...args: unknown[]) => void>(
+export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   delay: number
 ): (...args: Parameters<T>) => void {
@@ -61,7 +61,7 @@ export function debounce<T extends (...args: unknown[]) => void>(
   };
 }
 
-export function throttle<T extends (...args: unknown[]) => void>(
+export function throttle<T extends (...args: any[]) => void>(
   fn: T,
   limit: number
 ): (...args: Parameters<T>) => void {

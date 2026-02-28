@@ -1,4 +1,5 @@
 import { escapeHtml } from '@/utils/sanitize';
+import { debounce } from '@/utils/index';
 import { t } from '@/services/i18n';
 
 export type SearchResultType = 'country' | 'news' | 'hotspot' | 'market' | 'prediction' | 'conflict' | 'base' | 'pipeline' | 'cable' | 'datacenter' | 'earthquake' | 'outage' | 'nuclear' | 'irradiator' | 'techcompany' | 'ailab' | 'startup' | 'techevent' | 'techhq' | 'accelerator' | 'exchange' | 'financialcenter' | 'centralbank' | 'commodityhub';
@@ -106,7 +107,7 @@ export class SearchModal {
     this.input = this.overlay.querySelector('.search-input');
     this.resultsList = this.overlay.querySelector('.search-results');
 
-    this.input?.addEventListener('input', () => this.handleSearch());
+    this.input?.addEventListener('input', debounce(() => this.handleSearch(), 150));
     this.input?.addEventListener('keydown', (e) => this.handleKeydown(e));
 
     this.container.appendChild(this.overlay);

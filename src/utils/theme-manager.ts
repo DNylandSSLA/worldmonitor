@@ -33,8 +33,10 @@ export function getCurrentTheme(): Theme {
  * persist to localStorage, update meta theme-color, and dispatch event.
  */
 export function setTheme(theme: Theme): void {
+  document.documentElement.classList.add('theme-transitioning');
   document.documentElement.dataset.theme = theme;
   invalidateColorCache();
+  setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 250);
   try {
     localStorage.setItem(STORAGE_KEY, theme);
   } catch {
