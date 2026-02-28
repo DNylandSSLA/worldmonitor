@@ -30,3 +30,4 @@ export * from './data-freshness';
 export * from './oil-analytics';
 export { generateSummary, translateText } from './summarization';
 export * from './cached-theater-posture';
+export * from './discord';

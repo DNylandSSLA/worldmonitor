@@ -34,3 +34,5 @@ export * from './UcdpEventsPanel';
 export * from './ClimateAnomalyPanel';
 
 export * from './LanguageSelector';
+
+export * from './DiscordPanel';

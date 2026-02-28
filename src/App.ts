@@ -13,7 +13,7 @@ import {
   SITE_VARIANT,
 } from '@/config';
 import { BETA_MODE } from '@/config/beta';
-import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchNaturalEvents, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals } from '@/services';
+import { fetchCategoryFeeds, getFeedFailures, fetchMultipleStocks, fetchCrypto, fetchPredictions, fetchEarthquakes, fetchWeatherAlerts, fetchInternetOutages, isOutagesConfigured, fetchAisSignals, initAisStream, getAisStatus, disconnectAisStream, isAisConfigured, fetchCableActivity, fetchProtestEvents, getProtestStatus, fetchFlightDelays, fetchMilitaryFlights, fetchMilitaryVessels, initMilitaryVesselStream, isMilitaryVesselTrackingConfigured, initDB, updateBaseline, calculateDeviation, addToSignalHistory, saveSnapshot, cleanOldSnapshots, analysisWorker, fetchNaturalEvents, fetchOilAnalytics, fetchCyberThreats, drainTrendingSignals, fetchDiscordMessages, getDiscordStatus, isDiscordConfigured } from '@/services';
 import { fetchCountryMarkets } from '@/services/polymarket';
 import { mlWorker } from '@/services/ml-worker';
 import { clusterNewsHybrid } from '@/services/clustering';
@@ -71,6 +71,7 @@ import {
   UcdpEventsPanel,
   ClimateAnomalyPanel,
   LanguageSelector,
+  DiscordPanel,
 } from '@/components';
 import type { SearchResult } from '@/components/SearchModal';
 import { collectStoryData } from '@/services/story-data';
@@ -1959,6 +1960,12 @@ export class App {
     const insightsPanel = new InsightsPanel();
     this.panels['insights'] = insightsPanel;
 
+    // Discord Panel
+    if (isDiscordConfigured()) {
+      const discordPanel = new DiscordPanel();
+      this.panels['discord'] = discordPanel;
+    }
+
     // Add panels to grid in saved order
     // Use DEFAULT_PANELS keys for variant-aware panel order
     const defaultOrder = Object.keys(DEFAULT_PANELS).filter(k => k !== 'map');
@@ -2649,6 +2656,7 @@ export class App {
       { name: 'markets', task: runGuarded('markets', () => this.loadMarkets()) },
       { name: 'predictions', task: runGuarded('predictions', () => this.loadPredictions()) },
       { name: 'oil', task: runGuarded('oil', () => this.loadOilAnalytics()) },
+      { name: 'discord', task: runGuarded('discord', () => this.loadDiscord()) },
     ];
 
     // Load intelligence signals for CII calculation (protests, military, outages)
@@ -3723,6 +3731,21 @@ export class App {
     }
   }
 
+  private async loadDiscord(): Promise<void> {
+    if (!isDiscordConfigured()) return;
+    const discordPanel = this.panels['discord'] as DiscordPanel | undefined;
+    if (!discordPanel) return;
+    try {
+      const messages = await fetchDiscordMessages();
+      discordPanel.renderMessages(messages);
+      const status = getDiscordStatus();
+      discordPanel.setStatus(status.connected, status.guilds.length);
+    } catch (e) {
+      console.error('[App] Discord load failed:', e);
+      discordPanel.setStatus(false, 0);
+    }
+  }
+
   private updateMonitorResults(): void {
     const monitorPanel = this.panels['monitors'] as MonitorPanel;
     monitorPanel.renderResults(this.allNews);
@@ -3899,5 +3922,8 @@ export class App {
       this.cyberThreatsCache = null;
       return this.loadCyberThreats();
     }, 10 * 60 * 1000, () => CYBER_LAYER_ENABLED && this.mapLayers.cyberThreats);
+
+    // Discord — poll every 5 seconds
+    this.scheduleRefresh('discord', () => this.loadDiscord(), 5 * 1000, () => isDiscordConfigured());
   }
 }

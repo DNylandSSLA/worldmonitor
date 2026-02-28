@@ -1038,6 +1038,22 @@ export interface MapProtestCluster {
 }
 
 
+export interface DiscordMessage {
+  id: string;
+  content: string;
+  authorName: string;
+  authorAvatar: string;
+  channelName: string;
+  channelId: string;
+  guildName: string;
+  guildId: string;
+  timestamp: number;
+  embeds: Array<{ title?: string; description?: string; url?: string }>;
+  attachments: Array<{ name: string; url: string; contentType?: string }>;
+  isReply: boolean;
+  referencedContent?: string;
+}
+
 export interface MapDatacenterCluster {
   id: string;
   lat: number;

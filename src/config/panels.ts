@@ -41,6 +41,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
   'ucdp-events': { name: 'UCDP Conflict Events', enabled: true, priority: 2 },
   climate: { name: 'Climate Anomalies', enabled: true, priority: 2 },
+  discord: { name: 'Discord', enabled: true, priority: 2 },
 };
 
 const FULL_MAP_LAYERS: MapLayers = {
@@ -133,6 +134,7 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
   monitors: { name: 'My Monitors', enabled: true, priority: 2 },
+  discord: { name: 'Discord', enabled: true, priority: 2 },
 };
 
 const TECH_MAP_LAYERS: MapLayers = {
@@ -222,6 +224,7 @@ const FINANCE_PANELS: Record<string, PanelConfig> = {
   gccNews: { name: 'GCC Business News', enabled: true, priority: 2 },
   polymarket: { name: 'Predictions', enabled: true, priority: 2 },
   monitors: { name: 'My Monitors', enabled: true, priority: 2 },
+  discord: { name: 'Discord', enabled: true, priority: 2 },
 };
 
 const FINANCE_MAP_LAYERS: MapLayers = {

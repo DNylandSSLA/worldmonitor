@@ -24,7 +24,8 @@ export type DataSourceId =
   | 'ucdp'           // UCDP conflict classification
   | 'hapi'           // HDX HAPI aggregated conflict data
   | 'ucdp_events'    // UCDP georeferenced conflict events
-  | 'climate';       // Climate anomaly data (Open-Meteo)
+  | 'climate'        // Climate anomaly data (Open-Meteo)
+  | 'discord';       // Discord bridge messages
 
 export type FreshnessStatus = 'fresh' | 'stale' | 'very_stale' | 'no_data' | 'disabled' | 'error';
 
@@ -79,6 +80,7 @@ const SOURCE_METADATA: Record<DataSourceId, { name: string; requiredForRisk: boo
   hapi: { name: 'Conflict Aggregates (HDX)', requiredForRisk: false, panelId: 'protests' },
   ucdp_events: { name: 'UCDP Conflict Events', requiredForRisk: false, panelId: 'ucdp-events' },
   climate: { name: 'Climate Anomalies', requiredForRisk: false, panelId: 'climate' },
+  discord: { name: 'Discord Bridge', requiredForRisk: false, panelId: 'discord' },
 };
 
 class DataFreshnessTracker {
@@ -326,6 +328,7 @@ const INTELLIGENCE_GAP_MESSAGES: Record<DataSourceId, string> = {
   hapi: 'Aggregated conflict data unavailable—HDX HAPI not responding',
   ucdp_events: 'UCDP event-level conflict data unavailable',
   climate: 'Climate anomaly data unavailable—extreme weather patterns undetected',
+  discord: 'Discord bridge offline—community intel feed unavailable',
 };
 
 /**

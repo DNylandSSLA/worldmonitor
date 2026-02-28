@@ -40,7 +40,9 @@
     "desktop:package:macos:tech:sign": "node scripts/desktop-package.mjs --os macos --variant tech --sign",
     "desktop:package:windows:full:sign": "node scripts/desktop-package.mjs --os windows --variant full --sign",
     "desktop:package:windows:tech:sign": "node scripts/desktop-package.mjs --os windows --variant tech --sign",
-    "desktop:package": "node scripts/desktop-package.mjs"
+    "desktop:package": "node scripts/desktop-package.mjs",
+    "bot": "tsx --env-file=.env.local server/discord-bridge.ts",
+    "dev:full": "concurrently \"vite\" \"tsx --env-file=.env.local server/discord-bridge.ts\""
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",
@@ -53,6 +55,8 @@
     "typescript": "^5.7.2",
     "vite": "^6.0.7",
     "vite-plugin-pwa": "^1.2.0",
+    "concurrently": "^9.1.0",
+    "tsx": "^4.19.2",
     "ws": "^8.19.0"
   },
   "dependencies": {
@@ -72,6 +76,7 @@
     "maplibre-gl": "^5.16.0",
     "onnxruntime-web": "^1.23.2",
     "topojson-client": "^3.1.0",
+    "discord.js": "^14.16.3",
     "youtubei.js": "^16.0.1"
   }
 }
