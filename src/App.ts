@@ -72,6 +72,7 @@ import {
   ClimateAnomalyPanel,
   LanguageSelector,
   DiscordPanel,
+  CableActivityPanel,
 } from '@/components';
 import type { SearchResult } from '@/components/SearchModal';
 import { collectStoryData } from '@/services/story-data';
@@ -1937,6 +1938,9 @@ export class App {
       });
       this.panels['climate'] = climatePanel;
 
+      const cableActivityPanel = new CableActivityPanel();
+      this.panels['cable-activity'] = cableActivityPanel;
+
     }
 
     const liveNewsPanel = new LiveNewsPanel();
@@ -2669,10 +2673,10 @@ export class App {
     // NOTE: outages, protests, military are handled by loadIntelligenceSignals() above
     // They update the map when layers are enabled, so no duplicate tasks needed here
     if (SITE_VARIANT === 'full') tasks.push({ name: 'firms', task: runGuarded('firms', () => this.loadFirmsData()) });
+    if (SITE_VARIANT === 'full') tasks.push({ name: 'cables', task: runGuarded('cables', () => this.loadCableActivity()) });
     if (this.mapLayers.natural) tasks.push({ name: 'natural', task: runGuarded('natural', () => this.loadNatural()) });
     if (this.mapLayers.weather) tasks.push({ name: 'weather', task: runGuarded('weather', () => this.loadWeatherAlerts()) });
     if (this.mapLayers.ais) tasks.push({ name: 'ais', task: runGuarded('ais', () => this.loadAisSignals()) });
-    if (this.mapLayers.cables) tasks.push({ name: 'cables', task: runGuarded('cables', () => this.loadCableActivity()) });
     if (this.mapLayers.flights) tasks.push({ name: 'flights', task: runGuarded('flights', () => this.loadFlightDelays()) });
     if (CYBER_LAYER_ENABLED && this.mapLayers.cyberThreats) tasks.push({ name: 'cyberThreats', task: runGuarded('cyberThreats', () => this.loadCyberThreats()) });
 
@@ -3533,6 +3537,8 @@ export class App {
     try {
       const activity = await fetchCableActivity();
       this.map?.setCableActivity(activity.advisories, activity.repairShips);
+      const cablePanel = this.panels['cable-activity'] as CableActivityPanel | undefined;
+      cablePanel?.renderActivity(activity.advisories, activity.repairShips);
       const itemCount = activity.advisories.length + activity.repairShips.length;
       this.statusPanel?.updateFeed('CableOps', { status: 'ok', itemCount });
     } catch {
@@ -3916,7 +3922,7 @@ export class App {
     // NOTE: outages, protests, military are refreshed by intelligence schedule above
     this.scheduleRefresh('firms', () => this.loadFirmsData(), 30 * 60 * 1000);
     this.scheduleRefresh('ais', () => this.loadAisSignals(), REFRESH_INTERVALS.ais, () => this.mapLayers.ais);
-    this.scheduleRefresh('cables', () => this.loadCableActivity(), 30 * 60 * 1000, () => this.mapLayers.cables);
+    this.scheduleRefresh('cables', () => this.loadCableActivity(), 30 * 60 * 1000);
     this.scheduleRefresh('flights', () => this.loadFlightDelays(), 10 * 60 * 1000, () => this.mapLayers.flights);
     this.scheduleRefresh('cyberThreats', () => {
       this.cyberThreatsCache = null;

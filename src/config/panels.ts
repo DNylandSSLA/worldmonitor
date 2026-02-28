@@ -41,6 +41,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
   'ucdp-events': { name: 'UCDP Conflict Events', enabled: true, priority: 2 },
   climate: { name: 'Climate Anomalies', enabled: true, priority: 2 },
+  'cable-activity': { name: 'Cable Activity', enabled: true, priority: 2 },
   discord: { name: 'Discord', enabled: true, priority: 2 },
 };
 

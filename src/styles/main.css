@@ -13290,3 +13290,117 @@ body.has-critical-banner .panels-grid {
   background: var(--overlay-medium);
 }
 
+/* ============================================================
+   Cable Activity Panel
+   ============================================================ */
+.cable-item {
+  padding: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--border);
+}
+
+.cable-item:last-child {
+  border-bottom: none;
+}
+
+.cable-item.cable-fault {
+  border-left-color: var(--semantic-critical);
+}
+
+.cable-item.cable-degraded {
+  border-left-color: var(--semantic-elevated);
+}
+
+.cable-item.cable-ship.ship-active {
+  border-left-color: var(--semantic-info);
+}
+
+.cable-item.cable-ship.ship-enroute {
+  border-left-color: var(--text-muted);
+}
+
+.cable-item.cable-item-new {
+  background: linear-gradient(90deg, rgba(68, 255, 136, 0.1) 0%, transparent 50%);
+}
+
+.cable-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.cable-severity {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.cable-fault .cable-severity {
+  background: var(--semantic-critical);
+  color: var(--bg);
+}
+
+.cable-degraded .cable-severity {
+  background: var(--semantic-elevated);
+  color: var(--bg);
+}
+
+.cable-severity.ship {
+  background: var(--overlay-medium);
+  color: var(--text-secondary);
+}
+
+.cable-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cable-time {
+  font-size: 9px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.cable-description {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cable-impact {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.cable-section-header {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  padding: 8px 8px 4px;
+  border-top: 1px solid var(--border);
+}
+
+/* GDELT activity tracking highlight */
+.gdelt-intel-article.gdelt-article-new {
+  background: linear-gradient(90deg, rgba(68, 255, 136, 0.1) 0%, transparent 50%);
+}
+
