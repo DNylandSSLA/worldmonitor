@@ -109,7 +109,6 @@
     "vcblogs": "VC-Einblicke und Essays",
     "regionalStartups": "Globale Startup-Nachrichten",
     "unicorns": "Einhorn-Tracker",
-    "accelerators": "Beschleuniger & Demo-Tage",
     "security": "Cybersicherheit",
     "policy": "KI-Politik & Regulierung",
     "hardware": "Halbleiter & Hardware",
@@ -395,15 +394,7 @@
       "resetView": "Ansicht zurücksetzen",
       "legend": {
         "title": "LEGENDE",
-        "startupHub": "Startup-Hub",
-        "techHQ": "Tech-Zentrale",
-        "accelerator": "Beschleuniger",
-        "cloudRegion": "Cloud-Region",
         "datacenter": "Rechenzentrum",
-        "stockExchange": "Börse",
-        "financialCenter": "Finanzzentrum",
-        "centralBank": "Zentralbank",
-        "commodityHub": "Rohstoffzentrum",
         "waterway": "Wasserstraße",
         "highAlert": "Hohe Warnstufe",
         "elevated": "Erhöht",
@@ -413,10 +404,6 @@
       },
       "timeAll": "Alle",
       "layers": {
-        "startupHubs": "Startup-Hubs",
-        "techHQs": "Tech-Hauptquartiere",
-        "accelerators": "Beschleuniger",
-        "cloudRegions": "Cloud-Regionen",
         "aiDataCenters": "KI-Rechenzentren",
         "underseaCables": "Unterseekabel",
         "internetOutages": "Internetausfälle",
@@ -428,7 +415,6 @@
         "militaryBases": "Militärstützpunkte",
         "nuclearSites": "Nukleare Standorte",
         "gammaIrradiators": "Gammastrahler",
-        "spaceports": "Raumhäfen",
         "pipelines": "ROHRLEITUNGEN",
         "militaryActivity": "Militärische Aktivität",
         "shipTraffic": "Schiffsverkehr",
@@ -439,11 +425,7 @@
         "weatherAlerts": "Wetterwarnungen",
         "strategicWaterways": "Strategische Wasserstraßen",
         "economicCenters": "Wirtschaftszentren",
-        "criticalMinerals": "Kritische Mineralien",
-        "stockExchanges": "Börsen",
-        "financialCenters": "Finanzzentren",
-        "centralBanks": "Zentralbanken",
-        "commodityHubs": "Rohstoffzentren"
+        "criticalMinerals": "Kritische Mineralien"
       },
       "layersTitle": "Schichten",
       "layerGuide": "Ebenenführer",
@@ -456,13 +438,11 @@
         "aircraft": "Flugzeug",
         "protest": "Protest",
         "protestsCount": "{{count}} protestiert",
-        "techHQsCount": "{{count}} Tech-Hauptquartiere",
         "dataCentersCount": "{{count}} Rechenzentren",
         "underseaCable": "Unterseekabel",
         "pipeline": "Pipeline",
         "conflictZone": "Konfliktzone",
         "naturalEvent": "Naturereignis",
-        "financialCenter": "Finanzzentrum",
         "port": "Hafen",
         "disruption": "Störung",
         "advisory": "Beratung",
@@ -481,10 +461,8 @@
           "shipping": "Versand"
         },
         "sections": {
-          "techEcosystem": "Tech-Ökosystem",
           "infrastructure": "Infrastruktur",
           "naturalEconomic": "Natürlich und wirtschaftlich",
-          "financeCore": "Finanzkern",
           "infrastructureRisk": "Infrastruktur & Risiko",
           "macroContext": "Makrokontext",
           "timeFilter": "Zeitfilter (oben rechts)",
@@ -494,10 +472,6 @@
           "labels": "Etiketten"
         },
         "descriptions": {
-          "techStartupHubs": "Wichtige Startup-Ökosysteme (SF, NYC, London usw.)",
-          "techCloudRegions": "AWS-, Azure- und GCP-Rechenzentrumsregionen",
-          "techHQs": "Hauptsitze großer Technologieunternehmen",
-          "techAccelerators": "Y Combinator, Techstars, 500 Startup-Standorte",
           "infraCables": "Wichtige Unterwasser-Glasfaserkabel (Internet-Backbone)",
           "infraDatacenters": "KI-Rechencluster >=10.000 GPUs",
           "infraOutages": "Internetausfälle und Dienstunterbrechungen",
@@ -505,10 +479,6 @@
           "weatherAlerts": "Unwetterwarnungen",
           "economicCenters": "Börsen & Zentralbanken",
           "countriesOverlay": "Ländernamen-Overlays",
-          "financeExchanges": "Wichtige globale Börsen nach Marktebene",
-          "financeCenters": "Globale und regionale Finanzzentren",
-          "financeCentralBanks": "Geldpolitische Institutionen weltweit",
-          "financeCommodityHubs": "Wichtige Börsen, Häfen und Raffineriezentren",
           "financeCables": "Wichtige Unterwasser-Glasfaserrouten, die an die Marktinfrastruktur gebunden sind",
           "financePipelines": "Öl-/Gas-Pipeline-Routen wirken sich auf die Energiemärkte aus",
           "financeOutages": "Internetstörungen, die sich auf den Marktbetrieb auswirken können",
@@ -1039,45 +1009,6 @@
         "sampledSites": "Zeigt eine Beispielliste von {{count}}-Sites."
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "MEGA-HUB",
-        "major": "WICHTIGER HUB",
-        "emerging": "AUFSTREBEND",
-        "hub": "HUB"
-      },
-      "unicorns": "EINHÖRNER"
-    },
-    "cloudRegion": {
-      "provider": "ANBIETER",
-      "availabilityZones": "VERFÜGBARKEITSZONEN"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "GROSSE TECHNIK",
-        "unicorn": "EINHORN",
-        "public": "BÖRSENNOTIERT",
-        "tech": "TECH"
-      },
-      "marketCap": "MARKTKAP",
-      "employees": "MITARBEITER"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "BESCHLEUNIGER",
-        "incubator": "INKUBATOR",
-        "studio": "STARTUP-STUDIO"
-      },
-      "founded": "GEGRÜNDET",
-      "notableAlumni": "BEMERKENSWERTE ALUMNI"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}} UNTERNEHMEN",
-      "bigTechCount": "{{count}} Big Tech",
-      "unicornsCount": "{{count}} Einhörner",
-      "publicCount": "{{count}} Öffentlich",
-      "sampled": "Zeigt eine Beispielliste von {{count}}-Unternehmen."
-    },
     "militaryFlight": {
       "types": {
         "fighter": "Kämpfer",
@@ -1152,15 +1083,6 @@
       },
       "worldRank": "WELTRANG"
     },
-    "spaceport": {
-      "status": {
-        "active": "AKTIV",
-        "construction": "KONSTRUKTION",
-        "inactive": "INAKTIV"
-      },
-      "launchActivity": "AKTIVITÄT STARTEN",
-      "description": "Strategische Weltraumstartanlage. Startfrequenz und Orbit-Zugangsmöglichkeiten sind wichtige geopolitische Indikatoren."
-    },
     "mineral": {
       "status": {
         "producing": "PRODUZIEREN",
@@ -1168,19 +1090,6 @@
         "exploration": "ERFORSCHUNG"
       },
       "projectSubtitle": "{{mineral}} PROJEKT"
-    },
-    "stockExchange": {
-      "marketCap": "MARKTKAP"
-    },
-    "financialCenter": {
-      "gfciRank": "GFCI-RANG",
-      "specialties": "SPEZIALITÄTEN"
-    },
-    "centralBank": {
-      "currency": "WÄHRUNG"
-    },
-    "commodityHub": {
-      "commodities": "WAREN"
     },
     "hotspotSubtexts": {
       "conflict_zone": "Konfliktzone",

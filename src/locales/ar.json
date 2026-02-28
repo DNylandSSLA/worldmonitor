@@ -109,7 +109,6 @@
     "vcblogs": "رؤى ومقالات رأس المال المغامر",
     "regionalStartups": "أخبار الشركات الناشئة العالمية",
     "unicorns": "متتبع اليونيكورن",
-    "accelerators": "المسرّعات وأيام العروض",
     "security": "الأمن السيبراني",
     "policy": "سياسات وتنظيمات AI",
     "hardware": "أشباه الموصلات والعتاد",
@@ -480,15 +479,7 @@
       "resetView": "إعادة تعيين العرض",
       "legend": {
         "title": "دليل الرموز",
-        "startupHub": "مركز شركات ناشئة",
-        "techHQ": "مقر تقني",
-        "accelerator": "مسرّعة",
-        "cloudRegion": "منطقة سحابية",
         "datacenter": "مركز بيانات",
-        "stockExchange": "بورصة",
-        "financialCenter": "مركز مالي",
-        "centralBank": "بنك مركزي",
-        "commodityHub": "مركز سلعي",
         "waterway": "ممر مائي",
         "highAlert": "تنبيه مرتفع",
         "elevated": "متصاعد",
@@ -510,10 +501,6 @@
         "oceania": "أوقيانوسيا"
       },
       "layers": {
-        "startupHubs": "مراكز الشركات الناشئة",
-        "techHQs": "مقرات شركات التقنية",
-        "accelerators": "المسرّعات",
-        "cloudRegions": "مناطق السحابة",
         "aiDataCenters": "مراكز بيانات AI",
         "underseaCables": "الكابلات البحرية",
         "internetOutages": "انقطاعات الإنترنت",
@@ -525,7 +512,6 @@
         "militaryBases": "قواعد عسكرية",
         "nuclearSites": "مواقع نووية",
         "gammaIrradiators": "أجهزة تشعيع غاما",
-        "spaceports": "مطارات فضائية",
         "pipelines": "خطوط أنابيب",
         "militaryActivity": "نشاط عسكري",
         "shipTraffic": "حركة السفن",
@@ -536,11 +522,7 @@
         "weatherAlerts": "تنبيهات الطقس",
         "strategicWaterways": "ممرات مائية استراتيجية",
         "economicCenters": "مراكز اقتصادية",
-        "criticalMinerals": "معادن حيوية",
-        "stockExchanges": "بورصات",
-        "financialCenters": "مراكز مالية",
-        "centralBanks": "بنوك مركزية",
-        "commodityHubs": "مراكز سلعية"
+        "criticalMinerals": "معادن حيوية"
       },
       "tooltip": {
         "earthquake": "زلزال",
@@ -551,13 +533,11 @@
         "aircraft": "طائرات",
         "protest": "احتجاج",
         "protestsCount": "{{count}} احتجاج",
-        "techHQsCount": "{{count}} مقر تقني",
         "dataCentersCount": "{{count}} مركز بيانات",
         "underseaCable": "كابل بحري",
         "pipeline": "خط أنابيب",
         "conflictZone": "منطقة نزاع",
         "naturalEvent": "حدث طبيعي",
-        "financialCenter": "مركز مالي",
         "port": "ميناء",
         "disruption": "انقطاع",
         "advisory": "تحذير",
@@ -576,10 +556,8 @@
           "shipping": "الشحن"
         },
         "sections": {
-          "techEcosystem": "النظام البيئي التقني",
           "infrastructure": "البنية التحتية",
           "naturalEconomic": "طبيعي واقتصادي",
-          "financeCore": "جوهر المالية",
           "infrastructureRisk": "البنية التحتية والمخاطر",
           "macroContext": "السياق الكلي",
           "timeFilter": "فلتر الوقت (أعلى اليمين)",
@@ -589,10 +567,6 @@
           "labels": "التسميات"
         },
         "descriptions": {
-          "techStartupHubs": "أنظمة بيئية رئيسية للشركات الناشئة (سان فرانسيسكو، نيويورك، لندن، إلخ.)",
-          "techCloudRegions": "مناطق مراكز بيانات AWS و Azure و GCP",
-          "techHQs": "مقرات شركات التقنية الكبرى",
-          "techAccelerators": "مواقع Y Combinator و Techstars و 500 Startups",
           "infraCables": "كابلات ألياف ضوئية بحرية رئيسية (العمود الفقري للإنترنت)",
           "infraDatacenters": "مجموعات حوسبة AI بـ 10,000+ GPU",
           "infraOutages": "انقطاعات الإنترنت وتعطل الخدمات",
@@ -600,10 +574,6 @@
           "weatherAlerts": "تنبيهات طقس شديد",
           "economicCenters": "بورصات وبنوك مركزية",
           "countriesOverlay": "طبقة أسماء الدول",
-          "financeExchanges": "البورصات العالمية الرئيسية حسب الفئة السوقية",
-          "financeCenters": "مراكز مالية عالمية وإقليمية",
-          "financeCentralBanks": "مؤسسات السياسة النقدية حول العالم",
-          "financeCommodityHubs": "بورصات وموانئ ومراكز تكرير رئيسية",
           "financeCables": "مسارات ألياف بحرية رئيسية مرتبطة بالبنية التحتية للأسواق",
           "financePipelines": "مسارات أنابيب النفط/الغاز المؤثرة على أسواق الطاقة",
           "financeOutages": "انقطاعات إنترنت قد تؤثر على عمليات الأسواق",
@@ -1039,45 +1009,6 @@
         "sampledSites": "عرض قائمة عيّنة من {{count}} موقع."
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "مركز ضخم",
-        "major": "مركز رئيسي",
-        "emerging": "ناشئ",
-        "hub": "مركز"
-      },
-      "unicorns": "يونيكورن"
-    },
-    "cloudRegion": {
-      "provider": "المزوّد",
-      "availabilityZones": "مناطق التوفر"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "تقنية كبرى",
-        "unicorn": "يونيكورن",
-        "public": "عامة",
-        "tech": "تقنية"
-      },
-      "marketCap": "القيمة السوقية",
-      "employees": "الموظفون"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "مسرّعة",
-        "incubator": "حاضنة",
-        "studio": "استوديو شركات ناشئة"
-      },
-      "founded": "تأسست",
-      "notableAlumni": "خريجون بارزون"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}} شركة",
-      "bigTechCount": "{{count}} تقنية كبرى",
-      "unicornsCount": "{{count}} يونيكورن",
-      "publicCount": "{{count}} عامة",
-      "sampled": "عرض قائمة عيّنة من {{count}} شركة."
-    },
     "militaryFlight": {
       "types": {
         "fighter": "مقاتلة",
@@ -1152,15 +1083,6 @@
       },
       "worldRank": "الترتيب العالمي"
     },
-    "spaceport": {
-      "status": {
-        "active": "نشط",
-        "construction": "قيد الإنشاء",
-        "inactive": "غير نشط"
-      },
-      "launchActivity": "نشاط الإطلاق",
-      "description": "منشأة إطلاق فضائية استراتيجية. وتيرة الإطلاق وقدرات الوصول المداري مؤشرات جيوسياسية رئيسية."
-    },
     "mineral": {
       "status": {
         "producing": "منتج",
@@ -1168,19 +1090,6 @@
         "exploration": "استكشاف"
       },
       "projectSubtitle": "مشروع {{mineral}}"
-    },
-    "stockExchange": {
-      "marketCap": "القيمة السوقية"
-    },
-    "financialCenter": {
-      "gfciRank": "ترتيب GFCI",
-      "specialties": "التخصصات"
-    },
-    "centralBank": {
-      "currency": "العملة"
-    },
-    "commodityHub": {
-      "commodities": "السلع"
     },
     "hotspotSubtexts": {
       "conflict_zone": "منطقة نزاع",

@@ -1,7 +1,6 @@
-import type { ConflictZone, Hotspot, Earthquake, NewsItem, MilitaryBase, StrategicWaterway, APTGroup, NuclearFacility, EconomicCenter, GammaIrradiator, Pipeline, UnderseaCable, CableAdvisory, RepairShip, InternetOutage, AIDataCenter, AisDisruptionEvent, SocialUnrestEvent, AirportDelayAlert, MilitaryFlight, MilitaryVessel, MilitaryFlightCluster, MilitaryVesselCluster, NaturalEvent, Port, Spaceport, CriticalMineralProject, CyberThreat } from '@/types';
+import type { ConflictZone, Hotspot, Earthquake, NewsItem, MilitaryBase, StrategicWaterway, APTGroup, NuclearFacility, EconomicCenter, GammaIrradiator, Pipeline, UnderseaCable, CableAdvisory, RepairShip, InternetOutage, AIDataCenter, AisDisruptionEvent, SocialUnrestEvent, AirportDelayAlert, MilitaryFlight, MilitaryVessel, MilitaryFlightCluster, MilitaryVesselCluster, NaturalEvent, Port, CriticalMineralProject, CyberThreat } from '@/types';
 import type { WeatherAlert } from '@/services/weather';
 import { UNDERSEA_CABLES } from '@/config';
-import type { StartupHub, Accelerator, TechHQ, CloudRegion } from '@/config/tech-geo';
 import { escapeHtml, sanitizeUrl } from '@/utils/sanitize';
 import { isMobileDevice, getCSSColor } from '@/utils';
 import { t } from '@/services/i18n';
@@ -9,64 +8,7 @@ import { fetchHotspotContext, formatArticleDate, extractDomain, type GdeltArticl
 import { getNaturalEventIcon } from '@/services/eonet';
 import { getHotspotEscalation, getEscalationChange24h } from '@/services/hotspot-escalation';
 
-export type PopupType = 'conflict' | 'hotspot' | 'earthquake' | 'weather' | 'base' | 'waterway' | 'apt' | 'cyberThreat' | 'nuclear' | 'economic' | 'irradiator' | 'pipeline' | 'cable' | 'cable-advisory' | 'repair-ship' | 'outage' | 'datacenter' | 'datacenterCluster' | 'ais' | 'protest' | 'protestCluster' | 'flight' | 'militaryFlight' | 'militaryVessel' | 'militaryFlightCluster' | 'militaryVesselCluster' | 'natEvent' | 'port' | 'spaceport' | 'mineral' | 'startupHub' | 'cloudRegion' | 'techHQ' | 'accelerator' | 'techHQCluster' | 'stockExchange' | 'financialCenter' | 'centralBank' | 'commodityHub';
-
-interface TechHQClusterData {
-  items: TechHQ[];
-  city: string;
-  country: string;
-  count?: number;
-  faangCount?: number;
-  unicornCount?: number;
-  publicCount?: number;
-  sampled?: boolean;
-}
-
-// Finance popup data types
-interface StockExchangePopupData {
-  id: string;
-  name: string;
-  shortName: string;
-  city: string;
-  country: string;
-  tier: string;
-  marketCap?: number;
-  tradingHours?: string;
-  timezone?: string;
-  description?: string;
-}
-
-interface FinancialCenterPopupData {
-  id: string;
-  name: string;
-  city: string;
-  country: string;
-  type: string;
-  gfciRank?: number;
-  specialties?: string[];
-  description?: string;
-}
-
-interface CentralBankPopupData {
-  id: string;
-  name: string;
-  shortName: string;
-  city: string;
-  country: string;
-  type: string;
-  currency?: string;
-  description?: string;
-}
-
-interface CommodityHubPopupData {
-  id: string;
-  name: string;
-  city: string;
-  country: string;
-  type: string;
-  commodities?: string[];
-  description?: string;
-}
+export type PopupType = 'conflict' | 'hotspot' | 'earthquake' | 'weather' | 'base' | 'waterway' | 'apt' | 'cyberThreat' | 'nuclear' | 'economic' | 'irradiator' | 'pipeline' | 'cable' | 'cable-advisory' | 'repair-ship' | 'outage' | 'datacenter' | 'datacenterCluster' | 'ais' | 'protest' | 'protestCluster' | 'flight' | 'militaryFlight' | 'militaryVessel' | 'militaryFlightCluster' | 'militaryVesselCluster' | 'natEvent' | 'port' | 'mineral';
 
 interface ProtestClusterData {
   items: SocialUnrestEvent[];
@@ -93,7 +35,7 @@ interface DatacenterClusterData {
 
 interface PopupData {
   type: PopupType;
-  data: ConflictZone | Hotspot | Earthquake | WeatherAlert | MilitaryBase | StrategicWaterway | APTGroup | CyberThreat | NuclearFacility | EconomicCenter | GammaIrradiator | Pipeline | UnderseaCable | CableAdvisory | RepairShip | InternetOutage | AIDataCenter | AisDisruptionEvent | SocialUnrestEvent | AirportDelayAlert | MilitaryFlight | MilitaryVessel | MilitaryFlightCluster | MilitaryVesselCluster | NaturalEvent | Port | Spaceport | CriticalMineralProject | StartupHub | CloudRegion | TechHQ | Accelerator | TechHQClusterData | ProtestClusterData | DatacenterClusterData | StockExchangePopupData | FinancialCenterPopupData | CentralBankPopupData | CommodityHubPopupData;
+  data: ConflictZone | Hotspot | Earthquake | WeatherAlert | MilitaryBase | StrategicWaterway | APTGroup | CyberThreat | NuclearFacility | EconomicCenter | GammaIrradiator | Pipeline | UnderseaCable | CableAdvisory | RepairShip | InternetOutage | AIDataCenter | AisDisruptionEvent | SocialUnrestEvent | AirportDelayAlert | MilitaryFlight | MilitaryVessel | MilitaryFlightCluster | MilitaryVesselCluster | NaturalEvent | Port | CriticalMineralProject | ProtestClusterData | DatacenterClusterData;
   relatedNews?: NewsItem[];
   x: number;
   y: number;
@@ -276,28 +218,8 @@ export class MapPopup {
         return this.renderNaturalEventPopup(data.data as NaturalEvent);
       case 'port':
         return this.renderPortPopup(data.data as Port);
-      case 'spaceport':
-        return this.renderSpaceportPopup(data.data as Spaceport);
       case 'mineral':
         return this.renderMineralPopup(data.data as CriticalMineralProject);
-      case 'startupHub':
-        return this.renderStartupHubPopup(data.data as StartupHub);
-      case 'cloudRegion':
-        return this.renderCloudRegionPopup(data.data as CloudRegion);
-      case 'techHQ':
-        return this.renderTechHQPopup(data.data as TechHQ);
-      case 'accelerator':
-        return this.renderAcceleratorPopup(data.data as Accelerator);
-      case 'techHQCluster':
-        return this.renderTechHQClusterPopup(data.data as TechHQClusterData);
-      case 'stockExchange':
-        return this.renderStockExchangePopup(data.data as StockExchangePopupData);
-      case 'financialCenter':
-        return this.renderFinancialCenterPopup(data.data as FinancialCenterPopupData);
-      case 'centralBank':
-        return this.renderCentralBankPopup(data.data as CentralBankPopupData);
-      case 'commodityHub':
-        return this.renderCommodityHubPopup(data.data as CommodityHubPopupData);
       default:
         return '';
     }
@@ -1524,163 +1446,6 @@ export class MapPopup {
     `;
   }
 
-  private renderStartupHubPopup(hub: StartupHub): string {
-    const tierLabels: Record<string, string> = {
-      'mega': t('popups.startupHub.tiers.mega'),
-      'major': t('popups.startupHub.tiers.major'),
-      'emerging': t('popups.startupHub.tiers.emerging'),
-    };
-    const tierIcons: Record<string, string> = { 'mega': '🦄', 'major': '🚀', 'emerging': '💡' };
-    return `
-      <div class="popup-header startup-hub ${hub.tier}">
-        <span class="popup-title">${tierIcons[hub.tier] || '🚀'} ${escapeHtml(hub.name)}</span>
-        <span class="popup-badge ${hub.tier}">${tierLabels[hub.tier] || t('popups.startupHub.tiers.hub')}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(hub.city)}, ${escapeHtml(hub.country)}</div>
-        ${hub.unicorns ? `
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.startupHub.unicorns')}</span>
-            <span class="stat-value">${hub.unicorns}+</span>
-          </div>
-        </div>
-        ` : ''}
-        ${hub.description ? `<p class="popup-description">${escapeHtml(hub.description)}</p>` : ''}
-      </div>
-    `;
-  }
-
-  private renderCloudRegionPopup(region: CloudRegion): string {
-    const providerNames: Record<string, string> = { 'aws': 'Amazon Web Services', 'gcp': 'Google Cloud Platform', 'azure': 'Microsoft Azure', 'cloudflare': 'Cloudflare' };
-    const providerIcons: Record<string, string> = { 'aws': '🟠', 'gcp': '🔵', 'azure': '🟣', 'cloudflare': '🟡' };
-    return `
-      <div class="popup-header cloud-region ${region.provider}">
-        <span class="popup-title">${providerIcons[region.provider] || '☁️'} ${escapeHtml(region.name)}</span>
-        <span class="popup-badge ${region.provider}">${region.provider.toUpperCase()}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(region.city)}, ${escapeHtml(region.country)}</div>
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.cloudRegion.provider')}</span>
-            <span class="stat-value">${providerNames[region.provider] || region.provider}</span>
-          </div>
-          ${region.zones ? `
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.cloudRegion.availabilityZones')}</span>
-            <span class="stat-value">${region.zones}</span>
-          </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-  }
-
-  private renderTechHQPopup(hq: TechHQ): string {
-    const typeLabels: Record<string, string> = {
-      'faang': t('popups.techHQ.types.faang'),
-      'unicorn': t('popups.techHQ.types.unicorn'),
-      'public': t('popups.techHQ.types.public'),
-    };
-    const typeIcons: Record<string, string> = { 'faang': '🏛️', 'unicorn': '🦄', 'public': '🏢' };
-    return `
-      <div class="popup-header tech-hq ${hq.type}">
-        <span class="popup-title">${typeIcons[hq.type] || '🏢'} ${escapeHtml(hq.company)}</span>
-        <span class="popup-badge ${hq.type}">${typeLabels[hq.type] || t('popups.techHQ.types.tech')}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(hq.city)}, ${escapeHtml(hq.country)}</div>
-        <div class="popup-stats">
-          ${hq.marketCap ? `
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.techHQ.marketCap')}</span>
-            <span class="stat-value">${escapeHtml(hq.marketCap)}</span>
-          </div>
-          ` : ''}
-          ${hq.employees ? `
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.techHQ.employees')}</span>
-            <span class="stat-value">${hq.employees.toLocaleString()}</span>
-          </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-  }
-
-  private renderAcceleratorPopup(acc: Accelerator): string {
-    const typeLabels: Record<string, string> = {
-      'accelerator': t('popups.accelerator.types.accelerator'),
-      'incubator': t('popups.accelerator.types.incubator'),
-      'studio': t('popups.accelerator.types.studio'),
-    };
-    const typeIcons: Record<string, string> = { 'accelerator': '🎯', 'incubator': '🔬', 'studio': '🎨' };
-    return `
-      <div class="popup-header accelerator ${acc.type}">
-        <span class="popup-title">${typeIcons[acc.type] || '🎯'} ${escapeHtml(acc.name)}</span>
-        <span class="popup-badge ${acc.type}">${typeLabels[acc.type] || t('popups.accelerator.types.accelerator')}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(acc.city)}, ${escapeHtml(acc.country)}</div>
-        <div class="popup-stats">
-          ${acc.founded ? `
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.accelerator.founded')}</span>
-            <span class="stat-value">${acc.founded}</span>
-          </div>
-          ` : ''}
-        </div>
-        ${acc.notable && acc.notable.length > 0 ? `
-        <div class="popup-notable">
-          <span class="notable-label">${t('popups.accelerator.notableAlumni')}</span>
-          <span class="notable-list">${acc.notable.map(n => escapeHtml(n)).join(', ')}</span>
-        </div>
-        ` : ''}
-      </div>
-    `;
-  }
-
-  private renderTechHQClusterPopup(data: TechHQClusterData): string {
-    const totalCount = data.count ?? data.items.length;
-    const unicornCount = data.unicornCount ?? data.items.filter(h => h.type === 'unicorn').length;
-    const faangCount = data.faangCount ?? data.items.filter(h => h.type === 'faang').length;
-    const publicCount = data.publicCount ?? data.items.filter(h => h.type === 'public').length;
-
-    const sortedItems = [...data.items].sort((a, b) => {
-      const typeOrder = { faang: 0, unicorn: 1, public: 2 };
-      return (typeOrder[a.type] ?? 3) - (typeOrder[b.type] ?? 3);
-    });
-
-    const listItems = sortedItems.map(hq => {
-      const icon = hq.type === 'faang' ? '🏛️' : hq.type === 'unicorn' ? '🦄' : '🏢';
-      const marketCap = hq.marketCap ? ` (${hq.marketCap})` : '';
-      return `<li class="cluster-item ${hq.type}">${icon} ${escapeHtml(hq.company)}${marketCap}</li>`;
-    }).join('');
-
-    return `
-      <div class="popup-header tech-hq cluster">
-        <span class="popup-title">🏙️ ${escapeHtml(data.city)}</span>
-        <span class="popup-badge">${t('popups.techHQCluster.companiesCount', { count: String(totalCount) })}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body cluster-popup">
-        <div class="popup-subtitle">📍 ${escapeHtml(data.city)}, ${escapeHtml(data.country)}</div>
-        <div class="cluster-summary">
-          ${faangCount ? `<span class="summary-item faang">🏛️ ${t('popups.techHQCluster.bigTechCount', { count: String(faangCount) })}</span>` : ''}
-          ${unicornCount ? `<span class="summary-item unicorn">🦄 ${t('popups.techHQCluster.unicornsCount', { count: String(unicornCount) })}</span>` : ''}
-          ${publicCount ? `<span class="summary-item public">🏢 ${t('popups.techHQCluster.publicCount', { count: String(publicCount) })}</span>` : ''}
-        </div>
-        <ul class="cluster-list">${listItems}</ul>
-        ${data.sampled ? `<p class="popup-more">${t('popups.techHQCluster.sampled', { count: String(data.items.length) })}</p>` : ''}
-      </div>
-    `;
-  }
-
   private getMarketStatus(hours: { open: string; close: string; timezone: string }): 'open' | 'closed' | 'unknown' {
     try {
       const now = new Date();
@@ -2115,42 +1880,6 @@ export class MapPopup {
     `;
   }
 
-  private renderSpaceportPopup(port: Spaceport): string {
-    const statusColors: Record<string, string> = {
-      'active': 'elevated',
-      'construction': 'high',
-      'inactive': 'low',
-    };
-    const statusLabels: Record<string, string> = {
-      'active': t('popups.spaceport.status.active'),
-      'construction': t('popups.spaceport.status.construction'),
-      'inactive': t('popups.spaceport.status.inactive'),
-    };
-
-    return `
-      <div class="popup-header spaceport ${port.status}">
-        <span class="popup-icon">🚀</span>
-        <span class="popup-title">${escapeHtml(port.name.toUpperCase())}</span>
-        <span class="popup-badge ${statusColors[port.status] || 'normal'}">${statusLabels[port.status] || port.status.toUpperCase()}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(port.operator)} • ${escapeHtml(port.country)}</div>
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.spaceport.launchActivity')}</span>
-            <span class="stat-value">${escapeHtml(port.launches.toUpperCase())}</span>
-          </div>
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.coordinates')}</span>
-            <span class="stat-value">${port.lat.toFixed(2)}°, ${port.lon.toFixed(2)}°</span>
-          </div>
-        </div>
-        <p class="popup-description">${t('popups.spaceport.description')}</p>
-      </div>
-    `;
-  }
-
   private renderMineralPopup(mine: CriticalMineralProject): string {
     const statusColors: Record<string, string> = {
       'producing': 'elevated',
@@ -2194,110 +1923,4 @@ export class MapPopup {
     `;
   }
 
-  private renderStockExchangePopup(exchange: StockExchangePopupData): string {
-    const tierLabel = exchange.tier.toUpperCase();
-    const tierClass = exchange.tier === 'mega' ? 'high' : exchange.tier === 'major' ? 'medium' : 'low';
-
-    return `
-      <div class="popup-header exchange">
-        <span class="popup-title">${escapeHtml(exchange.shortName)}</span>
-        <span class="popup-badge ${tierClass}">${tierLabel}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(exchange.name)}</div>
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.location')}</span>
-            <span class="stat-value">${escapeHtml(exchange.city)}, ${escapeHtml(exchange.country)}</span>
-          </div>
-          ${exchange.marketCap ? `<div class="popup-stat"><span class="stat-label">${t('popups.stockExchange.marketCap')}</span><span class="stat-value">$${exchange.marketCap}T</span></div>` : ''}
-          ${exchange.tradingHours ? `<div class="popup-stat"><span class="stat-label">${t('popups.tradingHours')}</span><span class="stat-value">${escapeHtml(exchange.tradingHours)}</span></div>` : ''}
-        </div>
-        ${exchange.description ? `<p class="popup-description">${escapeHtml(exchange.description)}</p>` : ''}
-      </div>
-    `;
-  }
-
-  private renderFinancialCenterPopup(center: FinancialCenterPopupData): string {
-    const typeLabel = center.type.toUpperCase();
-
-    return `
-      <div class="popup-header financial-center">
-        <span class="popup-title">${escapeHtml(center.name)}</span>
-        <span class="popup-badge">${typeLabel}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.location')}</span>
-            <span class="stat-value">${escapeHtml(center.city)}, ${escapeHtml(center.country)}</span>
-          </div>
-          ${center.gfciRank ? `<div class="popup-stat"><span class="stat-label">${t('popups.financialCenter.gfciRank')}</span><span class="stat-value">#${center.gfciRank}</span></div>` : ''}
-        </div>
-        ${center.specialties && center.specialties.length > 0 ? `
-          <div class="popup-section">
-            <span class="section-label">${t('popups.financialCenter.specialties')}</span>
-            <div class="popup-tags">
-              ${center.specialties.map(s => `<span class="popup-tag">${escapeHtml(s)}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-        ${center.description ? `<p class="popup-description">${escapeHtml(center.description)}</p>` : ''}
-      </div>
-    `;
-  }
-
-  private renderCentralBankPopup(bank: CentralBankPopupData): string {
-    const typeLabel = bank.type.toUpperCase();
-
-    return `
-      <div class="popup-header central-bank">
-        <span class="popup-title">${escapeHtml(bank.shortName)}</span>
-        <span class="popup-badge">${typeLabel}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-subtitle">${escapeHtml(bank.name)}</div>
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.location')}</span>
-            <span class="stat-value">${escapeHtml(bank.city)}, ${escapeHtml(bank.country)}</span>
-          </div>
-          ${bank.currency ? `<div class="popup-stat"><span class="stat-label">${t('popups.centralBank.currency')}</span><span class="stat-value">${escapeHtml(bank.currency)}</span></div>` : ''}
-        </div>
-        ${bank.description ? `<p class="popup-description">${escapeHtml(bank.description)}</p>` : ''}
-      </div>
-    `;
-  }
-
-  private renderCommodityHubPopup(hub: CommodityHubPopupData): string {
-    const typeLabel = hub.type.toUpperCase();
-
-    return `
-      <div class="popup-header commodity-hub">
-        <span class="popup-title">${escapeHtml(hub.name)}</span>
-        <span class="popup-badge">${typeLabel}</span>
-        <button class="popup-close">×</button>
-      </div>
-      <div class="popup-body">
-        <div class="popup-stats">
-          <div class="popup-stat">
-            <span class="stat-label">${t('popups.location')}</span>
-            <span class="stat-value">${escapeHtml(hub.city)}, ${escapeHtml(hub.country)}</span>
-          </div>
-        </div>
-        ${hub.commodities && hub.commodities.length > 0 ? `
-          <div class="popup-section">
-            <span class="section-label">${t('popups.commodityHub.commodities')}</span>
-            <div class="popup-tags">
-              ${hub.commodities.map(c => `<span class="popup-tag">${escapeHtml(c)}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-        ${hub.description ? `<p class="popup-description">${escapeHtml(hub.description)}</p>` : ''}
-      </div>
-    `;
-  }
 }

@@ -63,23 +63,12 @@ const FULL_MAP_LAYERS: MapLayers = {
   flights: false,
   military: true,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in full variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in full variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 const FULL_MOBILE_MAP_LAYERS: MapLayers = {
@@ -102,23 +91,12 @@ const FULL_MOBILE_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in full variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in full variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 // ============================================
@@ -177,23 +155,12 @@ const TECH_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (enabled in tech variant)
-  startupHubs: true,
-  cloudRegions: true,
-  accelerators: false,
-  techHQs: true,
-  // Finance layers (disabled in tech variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 const TECH_MOBILE_MAP_LAYERS: MapLayers = {
@@ -216,23 +183,12 @@ const TECH_MOBILE_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (limited on mobile)
-  startupHubs: true,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in tech variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 // ============================================
@@ -288,23 +244,12 @@ const FINANCE_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in finance variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (enabled in finance variant)
-  stockExchanges: true,
-  financialCenters: true,
-  centralBanks: true,
-  commodityHubs: false,
 };
 
 const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
@@ -327,23 +272,12 @@ const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   // Data source layers
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (limited on mobile)
-  stockExchanges: true,
-  financialCenters: false,
-  centralBanks: true,
-  commodityHubs: false,
 };
 
 // ============================================

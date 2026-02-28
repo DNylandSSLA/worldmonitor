@@ -69,22 +69,11 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in full variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in full variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 // Mobile-specific defaults for geopolitical
@@ -108,22 +97,11 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in full variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in full variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 export const VARIANT_CONFIG: VariantConfig = {

@@ -14,18 +14,9 @@ import {
   STRATEGIC_WATERWAYS,
   ECONOMIC_CENTERS,
   AI_DATA_CENTERS,
-  STARTUP_HUBS,
-  ACCELERATORS,
-  TECH_HQS,
-  CLOUD_REGIONS,
   PORTS,
-  SPACEPORTS,
   APT_GROUPS,
   CRITICAL_MINERALS,
-  STOCK_EXCHANGES,
-  FINANCIAL_CENTERS,
-  CENTRAL_BANKS,
-  COMMODITY_HUBS,
 } from '../config';
 import type {
   AisDensityZone,
@@ -65,8 +56,6 @@ type LayerSnapshot = {
 type OverlaySnapshot = {
   protestMarkers: number;
   datacenterMarkers: number;
-  techEventMarkers: number;
-  techHQMarkers: number;
   hotspotMarkers: number;
 };
 
@@ -155,19 +144,10 @@ const allLayersEnabled: MapLayers = {
   flights: true,
   military: true,
   natural: true,
-  spaceports: true,
   minerals: true,
   fires: true,
   ucdpEvents: true,
   climate: true,
-  startupHubs: true,
-  cloudRegions: true,
-  accelerators: true,
-  techHQs: true,
-  stockExchanges: true,
-  financialCenters: true,
-  centralBanks: true,
-  commodityHubs: true,
 };
 
 const allLayersDisabled: MapLayers = {
@@ -190,19 +170,10 @@ const allLayersDisabled: MapLayers = {
   flights: false,
   military: false,
   natural: false,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
   climate: false,
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 const SEEDED_NEWS_LOCATIONS: Array<{
@@ -340,8 +311,6 @@ const getProtestClusterCount = (): number => {
 const getOverlaySnapshot = (): OverlaySnapshot => ({
   protestMarkers: document.querySelectorAll('.protest-marker').length,
   datacenterMarkers: document.querySelectorAll('.datacenter-marker').length,
-  techEventMarkers: document.querySelectorAll('.tech-event-marker').length,
-  techHQMarkers: document.querySelectorAll('.tech-hq-marker').length,
   hotspotMarkers: document.querySelectorAll('.hotspot').length,
 });
 
@@ -398,18 +367,9 @@ const [irradiatorLon, irradiatorLat] = firstLatLon(GAMMA_IRRADIATORS, [12.0, 50.
 const [waterwayLon, waterwayLat] = firstLatLon(STRATEGIC_WATERWAYS, [32.0, 30.0]);
 const [economicLon, economicLat] = firstLatLon(ECONOMIC_CENTERS, [-74.0, 40.7]);
 const [datacenterLon, datacenterLat] = firstLatLon(AI_DATA_CENTERS, [-121.9, 37.3]);
-const [spaceportLon, spaceportLat] = firstLatLon(SPACEPORTS, [-80.6, 28.6]);
 const [mineralLon, mineralLat] = firstLatLon(CRITICAL_MINERALS, [135.0, -27.0]);
-const [startupLon, startupLat] = firstLatLon(STARTUP_HUBS, [-122.08, 37.38]);
-const [acceleratorLon, acceleratorLat] = firstLatLon(ACCELERATORS, [-122.41, 37.77]);
-const [techHQLon, techHQLat] = firstLatLon(TECH_HQS, [-122.0, 37.3]);
-const [cloudRegionLon, cloudRegionLat] = firstLatLon(CLOUD_REGIONS, [-122.3, 37.6]);
 const [aptLon, aptLat] = firstLatLon(APT_GROUPS, [116.4, 39.9]);
 const [portLon, portLat] = firstLatLon(PORTS, [32.5, 29.9]);
-const [exchangeLon, exchangeLat] = firstLatLon(STOCK_EXCHANGES, [-74.0, 40.7]);
-const [financialCenterLon, financialCenterLat] = firstLatLon(FINANCIAL_CENTERS, [-74.0, 40.7]);
-const [centralBankLon, centralBankLat] = firstLatLon(CENTRAL_BANKS, [-77.0, 38.9]);
-const [commodityHubLon, commodityHubLat] = firstLatLon(COMMODITY_HUBS, [-87.6, 41.8]);
 
 const VISUAL_SCENARIOS: VisualScenario[] = [
   {
@@ -578,14 +538,6 @@ const VISUAL_SCENARIOS: VisualScenario[] = [
     expectedSelectors: [],
   },
   {
-    id: 'spaceports-z5',
-    variant: 'both',
-    enabledLayers: ['spaceports'],
-    camera: toCamera(spaceportLon, spaceportLat, 5.1),
-    expectedDeckLayers: ['spaceports-layer'],
-    expectedSelectors: [],
-  },
-  {
     id: 'minerals-z5',
     variant: 'both',
     enabledLayers: ['minerals'],
@@ -616,70 +568,6 @@ const VISUAL_SCENARIOS: VisualScenario[] = [
     enabledLayers: [],
     camera: toCamera(aptLon, aptLat, 5.1),
     expectedDeckLayers: ['apt-groups-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'startup-hubs-z5',
-    variant: 'tech',
-    enabledLayers: ['startupHubs'],
-    camera: toCamera(startupLon, startupLat, 5.2),
-    expectedDeckLayers: ['startup-hubs-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'accelerators-z5',
-    variant: 'tech',
-    enabledLayers: ['accelerators'],
-    camera: toCamera(acceleratorLon, acceleratorLat, 5.2),
-    expectedDeckLayers: ['accelerators-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'cloud-regions-z5',
-    variant: 'tech',
-    enabledLayers: ['cloudRegions'],
-    camera: toCamera(cloudRegionLon, cloudRegionLat, 5.2),
-    expectedDeckLayers: ['cloud-regions-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'tech-hqs-z5',
-    variant: 'tech',
-    enabledLayers: ['techHQs'],
-    camera: toCamera(techHQLon, techHQLat, 5.2),
-    expectedDeckLayers: ['tech-hq-clusters-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'stock-exchanges-z5',
-    variant: 'finance',
-    enabledLayers: ['stockExchanges'],
-    camera: toCamera(exchangeLon, exchangeLat, 5.2),
-    expectedDeckLayers: ['stock-exchanges-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'financial-centers-z5',
-    variant: 'finance',
-    enabledLayers: ['financialCenters'],
-    camera: toCamera(financialCenterLon, financialCenterLat, 5.2),
-    expectedDeckLayers: ['financial-centers-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'central-banks-z5',
-    variant: 'finance',
-    enabledLayers: ['centralBanks'],
-    camera: toCamera(centralBankLon, centralBankLat, 5.2),
-    expectedDeckLayers: ['central-banks-layer'],
-    expectedSelectors: [],
-  },
-  {
-    id: 'commodity-hubs-z5',
-    variant: 'finance',
-    enabledLayers: ['commodityHubs'],
-    camera: toCamera(commodityHubLon, commodityHubLat, 5.2),
-    expectedDeckLayers: ['commodity-hubs-layer'],
     expectedSelectors: [],
   },
   // Note: `sanctions` has no map renderer in DeckGLMap today; excluded from visual scenarios.

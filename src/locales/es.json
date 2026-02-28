@@ -109,7 +109,6 @@
     "vcblogs": "Insights de VC y Ensayos",
     "regionalStartups": "Noticias globales de startups",
     "unicorns": "Rastreador de unicornios",
-    "accelerators": "Aceleradores y días de demostración",
     "security": "Ciberseguridad",
     "policy": "Política y regulación de IA",
     "hardware": "Semiconductores y Hardware",
@@ -395,15 +394,7 @@
       "resetView": "Restablecer vista",
       "legend": {
         "title": "LEYENDA",
-        "startupHub": "Hub de Startups",
-        "techHQ": "Sede Tech",
-        "accelerator": "Aceleradora",
-        "cloudRegion": "Región Cloud",
         "datacenter": "Centro de datos",
-        "stockExchange": "Bolsa de valores",
-        "financialCenter": "Centro financiero",
-        "centralBank": "Banco central",
-        "commodityHub": "Centro de materias primas",
         "waterway": "Vía navegable",
         "highAlert": "Alerta alta",
         "elevated": "Elevado",
@@ -413,10 +404,6 @@
       },
       "timeAll": "Todo",
       "layers": {
-        "startupHubs": "Centros de inicio",
-        "techHQs": "Sedes tecnológicas",
-        "accelerators": "Aceleradores",
-        "cloudRegions": "Regiones de la nube",
         "aiDataCenters": "Centros de datos de IA",
         "underseaCables": "Cables submarinos",
         "internetOutages": "Cortes de Internet",
@@ -428,7 +415,6 @@
         "militaryBases": "Bases militares",
         "nuclearSites": "Sitios nucleares",
         "gammaIrradiators": "Irradiadores gamma",
-        "spaceports": "Puertos espaciales",
         "pipelines": "Tuberías",
         "militaryActivity": "Actividad militar",
         "shipTraffic": "Tráfico de barcos",
@@ -439,11 +425,7 @@
         "weatherAlerts": "Alertas meteorológicas",
         "strategicWaterways": "Vías navegables estratégicas",
         "economicCenters": "Centros Económicos",
-        "criticalMinerals": "Minerales críticos",
-        "stockExchanges": "Bolsas de Valores",
-        "financialCenters": "Centros financieros",
-        "centralBanks": "Bancos centrales",
-        "commodityHubs": "Centros de productos básicos"
+        "criticalMinerals": "Minerales críticos"
       },
       "layersTitle": "capas",
       "layerGuide": "Guía de capas",
@@ -456,13 +438,11 @@
         "aircraft": "aeronave",
         "protest": "Protesta",
         "protestsCount": "{{count}} protestas",
-        "techHQsCount": "{{count}} sedes técnicas",
         "dataCentersCount": "{{count}} centros de datos",
         "underseaCable": "Cable submarino",
         "pipeline": "Tubería",
         "conflictZone": "Zona de conflicto",
         "naturalEvent": "Evento Natural",
-        "financialCenter": "centro financiero",
         "port": "Puerto",
         "disruption": "Ruptura",
         "advisory": "Consultivo",
@@ -481,10 +461,8 @@
           "shipping": "Envío"
         },
         "sections": {
-          "techEcosystem": "Ecosistema tecnológico",
           "infrastructure": "Infraestructura",
           "naturalEconomic": "Natural y Económico",
-          "financeCore": "Núcleo financiero",
           "infrastructureRisk": "Infraestructura y Riesgo",
           "macroContext": "Contexto macroeconómico",
           "timeFilter": "Filtro de tiempo (arriba a la derecha)",
@@ -494,10 +472,6 @@
           "labels": "Etiquetas"
         },
         "descriptions": {
-          "techStartupHubs": "Principales ecosistemas de startups (SF, Nueva York, Londres, etc.)",
-          "techCloudRegions": "Regiones de centros de datos de AWS, Azure y GCP",
-          "techHQs": "Sedes de las principales empresas tecnológicas",
-          "techAccelerators": "Y Combinator, Techstars, 500 ubicaciones de startups",
           "infraCables": "Principales cables submarinos de fibra óptica (troncal de Internet)",
           "infraDatacenters": "Clústeres de computación de IA >=10 000 GPU",
           "infraOutages": "Apagones de Internet e interrupciones del servicio.",
@@ -505,10 +479,6 @@
           "weatherAlerts": "Alertas de clima severo",
           "economicCenters": "Bolsas de valores y bancos centrales",
           "countriesOverlay": "Superposiciones de nombres de países",
-          "financeExchanges": "Principales intercambios globales por nivel de mercado",
-          "financeCenters": "Centros financieros globales y regionales",
-          "financeCentralBanks": "Instituciones de política monetaria en todo el mundo",
-          "financeCommodityHubs": "Intercambios clave, puertos y centros de refinación",
           "financeCables": "Principales rutas submarinas de fibra ligadas a la infraestructura del mercado",
           "financePipelines": "Rutas de oleoductos y gasoductos que afectan a los mercados energéticos",
           "financeOutages": "Interrupciones de Internet que pueden afectar las operaciones del mercado",
@@ -1039,45 +1009,6 @@
         "sampledSites": "Mostrando una lista de muestra de {{count}} sitios."
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "MEGA CENTRO",
-        "major": "CENTRO PRINCIPAL",
-        "emerging": "EMERGENTE",
-        "hub": "CENTRO"
-      },
-      "unicorns": "UNICORNIOS"
-    },
-    "cloudRegion": {
-      "provider": "PROVEEDOR",
-      "availabilityZones": "ZONAS DE DISPONIBILIDAD"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "GRAN TECNOLOGÍA",
-        "unicorn": "UNICORNIO",
-        "public": "PÚBLICO",
-        "tech": "TECNOLOGÍA"
-      },
-      "marketCap": "LÍMITE DE MERCADO",
-      "employees": "EMPLEADOS"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "ACELERADOR",
-        "incubator": "INCUBADORA",
-        "studio": "ESTUDIO DE INICIO"
-      },
-      "founded": "FUNDADO",
-      "notableAlumni": "ALUMNOS NOTABLES"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}} EMPRESAS",
-      "bigTechCount": "{{count}} Gran tecnología",
-      "unicornsCount": "{{count}} Unicornios",
-      "publicCount": "{{count}} Público",
-      "sampled": "Mostrando una lista de muestra de {{count}} empresas."
-    },
     "militaryFlight": {
       "types": {
         "fighter": "Combatiente",
@@ -1152,15 +1083,6 @@
       },
       "worldRank": "RANGO MUNDIAL"
     },
-    "spaceport": {
-      "status": {
-        "active": "ACTIVO",
-        "construction": "CONSTRUCCIÓN",
-        "inactive": "INACTIVO"
-      },
-      "launchActivity": "ACTIVIDAD DE LANZAMIENTO",
-      "description": "Instalación estratégica de lanzamiento espacial. La cadencia de lanzamiento y las capacidades de acceso a la órbita son indicadores geopolíticos clave."
-    },
     "mineral": {
       "status": {
         "producing": "PRODUCTOR",
@@ -1168,19 +1090,6 @@
         "exploration": "EXPLORACIÓN"
       },
       "projectSubtitle": "{{mineral}} PROYECTO"
-    },
-    "stockExchange": {
-      "marketCap": "LÍMITE DE MERCADO"
-    },
-    "financialCenter": {
-      "gfciRank": "RANGO DEL GFCI",
-      "specialties": "ESPECIALIDADES"
-    },
-    "centralBank": {
-      "currency": "DIVISA"
-    },
-    "commodityHub": {
-      "commodities": "COMERCIOS"
     },
     "hotspotSubtexts": {
       "conflict_zone": "Zona de conflicto",

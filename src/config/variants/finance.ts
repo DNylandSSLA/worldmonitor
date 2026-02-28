@@ -5,9 +5,6 @@ import type { VariantConfig } from './base';
 // Re-export base config
 export * from './base';
 
-// Finance-specific exports
-export * from '../finance-geo';
-
 // Re-export feeds infrastructure
 export {
   SOURCE_TIERS,
@@ -190,22 +187,11 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled in finance variant)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance-specific layers
-  stockExchanges: true,
-  financialCenters: true,
-  centralBanks: true,
-  commodityHubs: false,
 };
 
 // Mobile defaults for finance variant
@@ -229,22 +215,11 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech layers (disabled)
-  startupHubs: false,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (limited on mobile)
-  stockExchanges: true,
-  financialCenters: false,
-  centralBanks: true,
-  commodityHubs: false,
 };
 
 export const VARIANT_CONFIG: VariantConfig = {

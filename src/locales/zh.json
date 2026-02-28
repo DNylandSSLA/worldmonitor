@@ -109,7 +109,6 @@
     "vcblogs": "风投洞察与文章",
     "regionalStartups": "全球创业新闻",
     "unicorns": "独角兽追踪",
-    "accelerators": "加速器与演示日",
     "security": "网络安全",
     "policy": "AI政策与监管",
     "hardware": "半导体与硬件",
@@ -480,15 +479,7 @@
       "resetView": "重置视图",
       "legend": {
         "title": "图例",
-        "startupHub": "创业中心",
-        "techHQ": "科技总部",
-        "accelerator": "加速器",
-        "cloudRegion": "云计算区域",
         "datacenter": "数据中心",
-        "stockExchange": "证券交易所",
-        "financialCenter": "金融中心",
-        "centralBank": "央行",
-        "commodityHub": "大宗商品枢纽",
         "waterway": "水道",
         "highAlert": "高度警报",
         "elevated": "升高",
@@ -510,10 +501,6 @@
         "oceania": "大洋洲"
       },
       "layers": {
-        "startupHubs": "创业中心",
-        "techHQs": "科技总部",
-        "accelerators": "加速器",
-        "cloudRegions": "云计算区域",
         "aiDataCenters": "AI数据中心",
         "underseaCables": "海底电缆",
         "internetOutages": "互联网中断",
@@ -525,7 +512,6 @@
         "militaryBases": "军事基地",
         "nuclearSites": "核设施",
         "gammaIrradiators": "伽马辐照器",
-        "spaceports": "航天发射场",
         "pipelines": "管道",
         "militaryActivity": "军事活动",
         "shipTraffic": "船舶交通",
@@ -536,11 +522,7 @@
         "weatherAlerts": "天气预警",
         "strategicWaterways": "战略水道",
         "economicCenters": "经济中心",
-        "criticalMinerals": "关键矿产",
-        "stockExchanges": "证券交易所",
-        "financialCenters": "金融中心",
-        "centralBanks": "央行",
-        "commodityHubs": "大宗商品枢纽"
+        "criticalMinerals": "关键矿产"
       },
       "tooltip": {
         "earthquake": "地震",
@@ -551,13 +533,11 @@
         "aircraft": "架飞机",
         "protest": "抗议活动",
         "protestsCount": "{{count}}起抗议",
-        "techHQsCount": "{{count}}个科技总部",
         "dataCentersCount": "{{count}}个数据中心",
         "underseaCable": "海底电缆",
         "pipeline": "管道",
         "conflictZone": "冲突区",
         "naturalEvent": "自然事件",
-        "financialCenter": "金融中心",
         "port": "港口",
         "disruption": "中断",
         "advisory": "公告",
@@ -576,10 +556,8 @@
           "shipping": "航运"
         },
         "sections": {
-          "techEcosystem": "科技生态系统",
           "infrastructure": "基础设施",
           "naturalEconomic": "自然与经济",
-          "financeCore": "金融核心",
           "infrastructureRisk": "基础设施与风险",
           "macroContext": "宏观背景",
           "timeFilter": "时间筛选（右上角）",
@@ -589,10 +567,6 @@
           "labels": "标签"
         },
         "descriptions": {
-          "techStartupHubs": "主要创业生态系统（旧金山、纽约、伦敦等）",
-          "techCloudRegions": "AWS、Azure、GCP数据中心区域",
-          "techHQs": "大型科技公司总部",
-          "techAccelerators": "Y Combinator、Techstars、500 Startups所在地",
           "infraCables": "主要海底光纤电缆（互联网骨干）",
           "infraDatacenters": "AI算力集群 >=10,000 GPU",
           "infraOutages": "互联网中断和服务故障",
@@ -600,10 +574,6 @@
           "weatherAlerts": "恶劣天气预警",
           "economicCenters": "证券交易所和央行",
           "countriesOverlay": "国家名称叠加层",
-          "financeExchanges": "按市场层级划分的全球主要交易所",
-          "financeCenters": "全球和区域金融枢纽",
-          "financeCentralBanks": "全球货币政策机构",
-          "financeCommodityHubs": "主要交易所、港口和炼油枢纽",
           "financeCables": "与市场基础设施相关的主要海底光纤线路",
           "financePipelines": "影响能源市场的油气管道线路",
           "financeOutages": "可能影响市场运营的互联网中断",
@@ -1039,45 +1009,6 @@
         "sampledSites": "显示{{count}}个站点的抽样列表。"
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "超级枢纽",
-        "major": "主要枢纽",
-        "emerging": "新兴",
-        "hub": "枢纽"
-      },
-      "unicorns": "独角兽"
-    },
-    "cloudRegion": {
-      "provider": "提供商",
-      "availabilityZones": "可用区"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "大型科技",
-        "unicorn": "独角兽",
-        "public": "上市公司",
-        "tech": "科技"
-      },
-      "marketCap": "市值",
-      "employees": "员工数"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "加速器",
-        "incubator": "孵化器",
-        "studio": "创业工作室"
-      },
-      "founded": "成立时间",
-      "notableAlumni": "知名校友"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}}家公司",
-      "bigTechCount": "{{count}}家大型科技",
-      "unicornsCount": "{{count}}家独角兽",
-      "publicCount": "{{count}}家上市公司",
-      "sampled": "显示{{count}}家公司的抽样列表。"
-    },
     "militaryFlight": {
       "types": {
         "fighter": "战斗机",
@@ -1152,15 +1083,6 @@
       },
       "worldRank": "世界排名"
     },
-    "spaceport": {
-      "status": {
-        "active": "活跃",
-        "construction": "建设中",
-        "inactive": "停用"
-      },
-      "launchActivity": "发射活动",
-      "description": "战略航天发射设施。发射频率和轨道进入能力是关键的地缘政治指标。"
-    },
     "mineral": {
       "status": {
         "producing": "生产中",
@@ -1168,19 +1090,6 @@
         "exploration": "勘探中"
       },
       "projectSubtitle": "{{mineral}}项目"
-    },
-    "stockExchange": {
-      "marketCap": "市值"
-    },
-    "financialCenter": {
-      "gfciRank": "GFCI排名",
-      "specialties": "专业领域"
-    },
-    "centralBank": {
-      "currency": "货币"
-    },
-    "commodityHub": {
-      "commodities": "大宗商品"
     },
     "hotspotSubtexts": {
       "conflict_zone": "冲突区",

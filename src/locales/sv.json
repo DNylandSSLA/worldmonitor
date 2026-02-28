@@ -22,7 +22,6 @@
     "vcblogs": "Riskkapitalinsikter",
     "regionalStartups": "Globala uppstartsnyheter",
     "unicorns": "Enhörningsspårare",
-    "accelerators": "Acceleratorer och demodagar",
     "funding": "Finansiering & VC",
     "producthunt": "Produktjakt",
     "security": "Cybersäkerhet",
@@ -313,15 +312,7 @@
       "resetView": "Återställ vy",
       "legend": {
         "title": "TECKENFÖRKLARING",
-        "startupHub": "Startup-hubb",
-        "techHQ": "Teknikhuvudkontor",
-        "accelerator": "Accelerator",
-        "cloudRegion": "Molnregion",
         "datacenter": "Datacenter",
-        "stockExchange": "Börs",
-        "financialCenter": "Finanscentrum",
-        "centralBank": "Centralbank",
-        "commodityHub": "Råvaruhubb",
         "waterway": "Vattenväg",
         "highAlert": "Höglarm",
         "elevated": "Förhöjd",
@@ -331,10 +322,6 @@
       },
       "timeAll": "Alla",
       "layers": {
-        "startupHubs": "Startuphubbar",
-        "techHQs": "Tekniska huvudkontor",
-        "accelerators": "Acceleratorer",
-        "cloudRegions": "Molnregioner",
         "aiDataCenters": "AI-datacenter",
         "underseaCables": "Undervattenskablar",
         "internetOutages": "Internetavbrott",
@@ -346,7 +333,6 @@
         "militaryBases": "Militärbaser",
         "nuclearSites": "Nukleära platser",
         "gammaIrradiators": "Gammastrålare",
-        "spaceports": "Rymdhamnar",
         "pipelines": "Rörledningar",
         "militaryActivity": "Militär aktivitet",
         "shipTraffic": "Fartygstrafik",
@@ -357,11 +343,7 @@
         "weatherAlerts": "Vädervarningar",
         "strategicWaterways": "Strategiska vattenvägar",
         "economicCenters": "ekonomiska centra",
-        "criticalMinerals": "Kritiska mineraler",
-        "stockExchanges": "Börser",
-        "financialCenters": "Finansiella centra",
-        "centralBanks": "centralbanker",
-        "commodityHubs": "Råvaruhubbar"
+        "criticalMinerals": "Kritiska mineraler"
       },
       "layersTitle": "Lager",
       "layerGuide": "Lagerguide",
@@ -374,13 +356,11 @@
         "aircraft": "flygplan",
         "protest": "Protest",
         "protestsCount": "{{count}} protester",
-        "techHQsCount": "{{count}} tekniska huvudkontor",
         "dataCentersCount": "{{count}} datacenter",
         "underseaCable": "Undervattenskabel",
         "pipeline": "Rörledning",
         "conflictZone": "Konfliktzon",
         "naturalEvent": "Naturlig händelse",
-        "financialCenter": "finanscentrum",
         "port": "Hamn",
         "disruption": "Avbrott",
         "advisory": "Rådgivande",
@@ -399,10 +379,8 @@
           "shipping": "Frakt"
         },
         "sections": {
-          "techEcosystem": "Tekniskt ekosystem",
           "infrastructure": "Infrastruktur",
           "naturalEconomic": "Naturligt & Ekonomiskt",
-          "financeCore": "Ekonomi kärna",
           "infrastructureRisk": "Infrastruktur & risk",
           "macroContext": "Makrokontext",
           "timeFilter": "Tidsfilter (överst till höger)",
@@ -412,10 +390,6 @@
           "labels": "Etiketter"
         },
         "descriptions": {
-          "techStartupHubs": "Stora start-ekosystem (SF, NYC, London, etc.)",
-          "techCloudRegions": "AWS, Azure, GCP datacenterregioner",
-          "techHQs": "Huvudkontor för stora teknikföretag",
-          "techAccelerators": "Y Combinator, Techstars, 500 startups-platser",
           "infraCables": "Större undervattens fiberoptiska kablar (internetstomme)",
           "infraDatacenters": "AI-beräkningskluster >=10 000 GPU:er",
           "infraOutages": "Internetavbrott och serviceavbrott",
@@ -423,10 +397,6 @@
           "weatherAlerts": "Varningar för svåra väderförhållanden",
           "economicCenters": "Börser & centralbanker",
           "countriesOverlay": "Överlagringar för landsnamn",
-          "financeExchanges": "Stora globala börser efter marknadsnivå",
-          "financeCenters": "Globala och regionala finanshubbar",
-          "financeCentralBanks": "Penningpolitiska institutioner över hela världen",
-          "financeCommodityHubs": "Nyckelutbyten, hamnar och raffineringsnav",
           "financeCables": "Större undervattensfibervägar knutna till marknadsinfrastruktur",
           "financePipelines": "Olje-/gasledningsvägar som påverkar energimarknaderna",
           "financeOutages": "Internetstörningar som kan påverka marknadsoperationerna",
@@ -970,45 +940,6 @@
         "sampledSites": "Visar ett urval av {{count}} webbplatser."
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "MEGA HUB",
-        "major": "STORA HUB",
-        "emerging": "UPPKOMST",
-        "hub": "NAV"
-      },
-      "unicorns": "ENHÖRNINGAR"
-    },
-    "cloudRegion": {
-      "provider": "LEVERANTÖR",
-      "availabilityZones": "TILLGÄNGLIGHETSZONER"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "STOR TEKNIK",
-        "unicorn": "ENHÖRNING",
-        "public": "OFFENTLIG",
-        "tech": "TECH"
-      },
-      "marketCap": "MARKNADSKAP",
-      "employees": "ANSTÄLLDA"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "ACCELERATOR",
-        "incubator": "INKUBATOR",
-        "studio": "STARTUP STUDIO"
-      },
-      "founded": "GRUNDAD",
-      "notableAlumni": "BETYDANDE ALUMNER"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}} FÖRETAG",
-      "bigTechCount": "{{count}} Big Tech",
-      "unicornsCount": "{{count}} Enhörningar",
-      "publicCount": "{{count}} Offentlig",
-      "sampled": "Visar en urvalslista över {{count}} företag."
-    },
     "militaryFlight": {
       "types": {
         "fighter": "Kämpe",
@@ -1083,15 +1014,6 @@
       },
       "worldRank": "VÄRLDSRANK"
     },
-    "spaceport": {
-      "status": {
-        "active": "AKTIV",
-        "construction": "KONSTRUKTION",
-        "inactive": "INAKTIV"
-      },
-      "launchActivity": "LANSERINGSAKTIVITET",
-      "description": "Strategisk rymduppskjutningsanläggning. Launch kadens och orbit access kapacitet är viktiga geopolitiska indikatorer."
-    },
     "mineral": {
       "status": {
         "producing": "PRODUCERA",
@@ -1099,19 +1021,6 @@
         "exploration": "UTFORSKNING"
       },
       "projectSubtitle": "{{mineral}} PROJEKT"
-    },
-    "stockExchange": {
-      "marketCap": "MARKNADSKAP"
-    },
-    "financialCenter": {
-      "gfciRank": "GFCI RANK",
-      "specialties": "SPECIALITETER"
-    },
-    "centralBank": {
-      "currency": "VALUTA"
-    },
-    "commodityHub": {
-      "commodities": "HANDELSVAROR"
     },
     "hotspotSubtexts": {
       "conflict_zone": "Konfliktzon",

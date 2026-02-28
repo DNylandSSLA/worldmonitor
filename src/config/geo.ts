@@ -1,4 +1,4 @@
-import type { Hotspot, ConflictZone, MilitaryBase, UnderseaCable, NuclearFacility, StrategicWaterway, APTGroup, EconomicCenter, Spaceport, CriticalMineralProject } from '@/types';
+import type { Hotspot, ConflictZone, MilitaryBase, UnderseaCable, NuclearFacility, StrategicWaterway, APTGroup, EconomicCenter, CriticalMineralProject } from '@/types';
 import { MILITARY_BASES_EXPANDED } from './bases-expanded';
 
 // Hotspot levels are NOT hardcoded - they are dynamically calculated based on news activity
@@ -1206,20 +1206,6 @@ export const ECONOMIC_CENTERS: EconomicCenter[] = [
   { id: 'luxembourg', name: 'Luxembourg', type: 'financial-hub', lat: 49.6116, lon: 6.1319, country: 'Luxembourg', description: 'European investment fund center' },
 ];
 
-export const SPACEPORTS: Spaceport[] = [
-  { id: 'ksc', name: 'Kennedy Space Center', lat: 28.57, lon: -80.64, country: 'USA', operator: 'NASA/Space Force', status: 'active', launches: 'High' },
-  { id: 'vandenberg', name: 'Vandenberg SFB', lat: 34.74, lon: -120.57, country: 'USA', operator: 'US Space Force', status: 'active', launches: 'Medium' },
-  { id: 'boca_chica', name: 'Starbase', lat: 25.99, lon: -97.15, country: 'USA', operator: 'SpaceX', status: 'active', launches: 'High' },
-  { id: 'baikonur', name: 'Baikonur Cosmodrome', lat: 45.96, lon: 63.30, country: 'Kazakhstan', operator: 'Roscosmos', status: 'active', launches: 'Medium' },
-  { id: 'plesetsk', name: 'Plesetsk Cosmodrome', lat: 62.92, lon: 40.57, country: 'Russia', operator: 'Roscosmos/Military', status: 'active', launches: 'Medium' },
-  { id: 'vostochny', name: 'Vostochny Cosmodrome', lat: 51.88, lon: 128.33, country: 'Russia', operator: 'Roscosmos', status: 'active', launches: 'Low' },
-  { id: 'jiuquan', name: 'Jiuquan SLC', lat: 40.96, lon: 100.29, country: 'China', operator: 'CNSA', status: 'active', launches: 'High' },
-  { id: 'xichang', name: 'Xichang SLC', lat: 28.24, lon: 102.02, country: 'China', operator: 'CNSA', status: 'active', launches: 'High' },
-  { id: 'wenchang', name: 'Wenchang SLC', lat: 19.61, lon: 110.95, country: 'China', operator: 'CNSA', status: 'active', launches: 'Medium' },
-  { id: 'kourou', name: 'Guiana Space Centre', lat: 5.23, lon: -52.76, country: 'France', operator: 'ESA/CNES', status: 'active', launches: 'Medium' },
-  { id: 'sriharikota', name: 'Satish Dhawan SC', lat: 13.72, lon: 80.23, country: 'India', operator: 'ISRO', status: 'active', launches: 'Medium' },
-  { id: 'tanegashima', name: 'Tanegashima SC', lat: 30.40, lon: 130.97, country: 'Japan', operator: 'JAXA', status: 'active', launches: 'Low' },
-];
 
 export const CRITICAL_MINERALS: CriticalMineralProject[] = [
   // Lithium

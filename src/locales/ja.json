@@ -109,7 +109,6 @@
     "vcblogs": "VCインサイト & エッセイ",
     "regionalStartups": "グローバルスタートアップニュース",
     "unicorns": "ユニコーントラッカー",
-    "accelerators": "アクセラレーター & デモデイ",
     "security": "サイバーセキュリティ",
     "policy": "AI政策・規制",
     "hardware": "半導体・ハードウェア",
@@ -480,15 +479,7 @@
       "resetView": "ビューをリセット",
       "legend": {
         "title": "凡例",
-        "startupHub": "スタートアップハブ",
-        "techHQ": "テック本社",
-        "accelerator": "アクセラレーター",
-        "cloudRegion": "クラウドリージョン",
         "datacenter": "データセンター",
-        "stockExchange": "証券取引所",
-        "financialCenter": "金融センター",
-        "centralBank": "中央銀行",
-        "commodityHub": "コモディティハブ",
         "waterway": "水路",
         "highAlert": "高警戒",
         "elevated": "上昇",
@@ -510,10 +501,6 @@
         "oceania": "オセアニア"
       },
       "layers": {
-        "startupHubs": "スタートアップハブ",
-        "techHQs": "テック本社",
-        "accelerators": "アクセラレーター",
-        "cloudRegions": "クラウドリージョン",
         "aiDataCenters": "AIデータセンター",
         "underseaCables": "海底ケーブル",
         "internetOutages": "インターネット障害",
@@ -525,7 +512,6 @@
         "militaryBases": "軍事基地",
         "nuclearSites": "核施設",
         "gammaIrradiators": "ガンマ線照射施設",
-        "spaceports": "宇宙港",
         "pipelines": "パイプライン",
         "militaryActivity": "軍事活動",
         "shipTraffic": "船舶交通",
@@ -536,11 +522,7 @@
         "weatherAlerts": "気象警報",
         "strategicWaterways": "戦略的水路",
         "economicCenters": "経済中心地",
-        "criticalMinerals": "重要鉱物",
-        "stockExchanges": "証券取引所",
-        "financialCenters": "金融センター",
-        "centralBanks": "中央銀行",
-        "commodityHubs": "コモディティハブ"
+        "criticalMinerals": "重要鉱物"
       },
       "tooltip": {
         "earthquake": "地震",
@@ -551,13 +533,11 @@
         "aircraft": "機",
         "protest": "抗議活動",
         "protestsCount": "{{count}}件の抗議活動",
-        "techHQsCount": "{{count}}件のテック本社",
         "dataCentersCount": "{{count}}件のデータセンター",
         "underseaCable": "海底ケーブル",
         "pipeline": "パイプライン",
         "conflictZone": "紛争地帯",
         "naturalEvent": "自然災害",
-        "financialCenter": "金融センター",
         "port": "港湾",
         "disruption": "障害",
         "advisory": "勧告",
@@ -576,10 +556,8 @@
           "shipping": "海運"
         },
         "sections": {
-          "techEcosystem": "テックエコシステム",
           "infrastructure": "インフラ",
           "naturalEconomic": "自然・経済",
-          "financeCore": "金融コア",
           "infrastructureRisk": "インフラ・リスク",
           "macroContext": "マクロ環境",
           "timeFilter": "時間フィルター（右上）",
@@ -589,10 +567,6 @@
           "labels": "ラベル"
         },
         "descriptions": {
-          "techStartupHubs": "主要スタートアップエコシステム（SF、NYC、ロンドン等）",
-          "techCloudRegions": "AWS、Azure、GCPのデータセンターリージョン",
-          "techHQs": "主要テック企業の本社",
-          "techAccelerators": "Y Combinator、Techstars、500 Startupsの拠点",
           "infraCables": "主要海底光ファイバーケーブル（インターネットの基幹）",
           "infraDatacenters": "10,000 GPU以上のAIコンピュートクラスター",
           "infraOutages": "インターネット遮断・サービス障害",
@@ -600,10 +574,6 @@
           "weatherAlerts": "気象警報",
           "economicCenters": "証券取引所・中央銀行",
           "countriesOverlay": "国名オーバーレイ",
-          "financeExchanges": "市場ティア別の主要グローバル取引所",
-          "financeCenters": "グローバルおよび地域金融ハブ",
-          "financeCentralBanks": "世界各国の金融政策機関",
-          "financeCommodityHubs": "主要取引所、港湾、精製ハブ",
           "financeCables": "市場インフラに結びつく主要海底光ファイバールート",
           "financePipelines": "エネルギー市場に影響する石油/ガスパイプラインルート",
           "financeOutages": "市場運営に影響しうるインターネット障害",
@@ -1039,45 +1009,6 @@
         "sampledSites": "{{count}}件のサイトのサンプルリストを表示。"
       }
     },
-    "startupHub": {
-      "tiers": {
-        "mega": "メガハブ",
-        "major": "メジャーハブ",
-        "emerging": "新興",
-        "hub": "ハブ"
-      },
-      "unicorns": "ユニコーン"
-    },
-    "cloudRegion": {
-      "provider": "プロバイダー",
-      "availabilityZones": "アベイラビリティゾーン"
-    },
-    "techHQ": {
-      "types": {
-        "faang": "ビッグテック",
-        "unicorn": "ユニコーン",
-        "public": "上場",
-        "tech": "テック"
-      },
-      "marketCap": "時価総額",
-      "employees": "従業員数"
-    },
-    "accelerator": {
-      "types": {
-        "accelerator": "アクセラレーター",
-        "incubator": "インキュベーター",
-        "studio": "スタートアップスタジオ"
-      },
-      "founded": "設立",
-      "notableAlumni": "著名な卒業企業"
-    },
-    "techHQCluster": {
-      "companiesCount": "{{count}}社",
-      "bigTechCount": "ビッグテック{{count}}社",
-      "unicornsCount": "ユニコーン{{count}}社",
-      "publicCount": "上場{{count}}社",
-      "sampled": "{{count}}社のサンプルリストを表示。"
-    },
     "militaryFlight": {
       "types": {
         "fighter": "戦闘機",
@@ -1152,15 +1083,6 @@
       },
       "worldRank": "世界ランク"
     },
-    "spaceport": {
-      "status": {
-        "active": "ACTIVE",
-        "construction": "建設中",
-        "inactive": "休止中"
-      },
-      "launchActivity": "打ち上げ活動",
-      "description": "戦略的宇宙発射施設。打ち上げ頻度と軌道到達能力は重要な地政学的指標。"
-    },
     "mineral": {
       "status": {
         "producing": "生産中",
@@ -1168,19 +1090,6 @@
         "exploration": "探査中"
       },
       "projectSubtitle": "{{mineral}}プロジェクト"
-    },
-    "stockExchange": {
-      "marketCap": "時価総額"
-    },
-    "financialCenter": {
-      "gfciRank": "GFCIランク",
-      "specialties": "専門分野"
-    },
-    "centralBank": {
-      "currency": "通貨"
-    },
-    "commodityHub": {
-      "commodities": "コモディティ"
     },
     "hotspotSubtexts": {
       "conflict_zone": "紛争地帯",

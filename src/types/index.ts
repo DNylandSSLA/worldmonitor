@@ -473,22 +473,11 @@ export interface MapLayers {
   flights: boolean;
   military: boolean;
   natural: boolean;
-  spaceports: boolean;
   minerals: boolean;
   fires: boolean;
   // Data source layers
   ucdpEvents: boolean;
   climate: boolean;
-  // Tech variant layers
-  startupHubs: boolean;
-  cloudRegions: boolean;
-  accelerators: boolean;
-  techHQs: boolean;
-  // Finance variant layers
-  stockExchanges: boolean;
-  financialCenters: boolean;
-  centralBanks: boolean;
-  commodityHubs: boolean;
 }
 
 export interface AIDataCenter {
@@ -537,16 +526,6 @@ export interface EconomicCenter {
   description?: string;
 }
 
-export interface Spaceport {
-  id: string;
-  name: string;
-  lat: number;
-  lon: number;
-  country: string;
-  operator: string;
-  status: 'active' | 'construction' | 'inactive';
-  launches: 'High' | 'Medium' | 'Low';
-}
 
 export interface CriticalMineralProject {
   id: string;
@@ -985,24 +964,6 @@ export interface AIResearchLab {
   faculty?: number;
 }
 
-export interface StartupEcosystem {
-  id: string;
-  name: string;
-  lat: number;
-  lon: number;
-  country: string;
-  city: string;
-  ecosystemTier?: 'tier1' | 'tier2' | 'tier3' | 'emerging';
-  totalFunding2024?: number;
-  activeStartups?: number;
-  unicorns?: number;
-  topSectors?: string[];
-  majorVCs?: string[];
-  notableStartups?: string[];
-  avgSeedRound?: number;
-  avgSeriesA?: number;
-  description?: string;
-}
 
 // ============================================================================
 // FOCAL POINT DETECTION (Intelligence Synthesis)
@@ -1076,20 +1037,6 @@ export interface MapProtestCluster {
   sampled?: boolean;
 }
 
-export interface MapTechHQCluster {
-  id: string;
-  lat: number;
-  lon: number;
-  count: number;
-  items: import('@/config/tech-geo').TechHQ[];
-  city: string;
-  country: string;
-  primaryType: 'faang' | 'unicorn' | 'public';
-  faangCount?: number;
-  unicornCount?: number;
-  publicCount?: number;
-  sampled?: boolean;
-}
 
 export interface MapDatacenterCluster {
   id: string;

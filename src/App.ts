@@ -83,11 +83,6 @@ import { INTEL_HOTSPOTS, CONFLICT_ZONES, MILITARY_BASES, UNDERSEA_CABLES, NUCLEA
 import { PIPELINES } from '@/config/pipelines';
 import { AI_DATA_CENTERS } from '@/config/ai-datacenters';
 import { GAMMA_IRRADIATORS } from '@/config/irradiators';
-import { TECH_COMPANIES } from '@/config/tech-companies';
-import { AI_RESEARCH_LABS } from '@/config/ai-research-labs';
-import { STARTUP_ECOSYSTEMS } from '@/config/startup-ecosystems';
-import { TECH_HQS, ACCELERATORS } from '@/config/tech-geo';
-import { STOCK_EXCHANGES, FINANCIAL_CENTERS, CENTRAL_BANKS, COMMODITY_HUBS } from '@/config/finance-geo';
 import { isDesktopRuntime } from '@/services/runtime';
 import { invokeTauri } from '@/services/tauri-bridge';
 import { getCountryAtCoordinates, hasCountryGeometry, isCoordinateInCountry, preloadCountryGeometry } from '@/services/country-geometry';
@@ -273,7 +268,7 @@ export class App {
     if (this.initialUrlState.layers) {
       // For tech variant, filter out geopolitical layers from URL
       if (currentVariant === 'tech') {
-        const geoLayers: (keyof MapLayers)[] = ['conflicts', 'bases', 'hotspots', 'nuclear', 'irradiators', 'sanctions', 'military', 'protests', 'pipelines', 'waterways', 'ais', 'flights', 'spaceports', 'minerals'];
+        const geoLayers: (keyof MapLayers)[] = ['conflicts', 'bases', 'hotspots', 'nuclear', 'irradiators', 'sanctions', 'military', 'protests', 'pipelines', 'waterways', 'ais', 'flights', 'minerals'];
         const urlLayers = this.initialUrlState.layers;
         geoLayers.forEach(layer => {
           urlLayers[layer] = false;
@@ -1163,27 +1158,6 @@ export class App {
 
     if (SITE_VARIANT === 'tech') {
       // Tech variant: tech-specific sources
-      this.searchModal.registerSource('techcompany', TECH_COMPANIES.map(c => ({
-        id: c.id,
-        title: c.name,
-        subtitle: `${c.sector} ${c.city} ${c.keyProducts?.join(' ') || ''}`.trim(),
-        data: c,
-      })));
-
-      this.searchModal.registerSource('ailab', AI_RESEARCH_LABS.map(l => ({
-        id: l.id,
-        title: l.name,
-        subtitle: `${l.type} ${l.city} ${l.focusAreas?.join(' ') || ''}`.trim(),
-        data: l,
-      })));
-
-      this.searchModal.registerSource('startup', STARTUP_ECOSYSTEMS.map(s => ({
-        id: s.id,
-        title: s.name,
-        subtitle: `${s.ecosystemTier} ${s.topSectors?.join(' ') || ''} ${s.notableStartups?.join(' ') || ''}`.trim(),
-        data: s,
-      })));
-
       this.searchModal.registerSource('datacenter', AI_DATA_CENTERS.map(d => ({
         id: d.id,
         title: d.name,
@@ -1196,22 +1170,6 @@ export class App {
         title: c.name,
         subtitle: c.major ? 'Major internet backbone' : 'Undersea cable',
         data: c,
-      })));
-
-      // Register Tech HQs (unicorns, FAANG, public companies from map)
-      this.searchModal.registerSource('techhq', TECH_HQS.map(h => ({
-        id: h.id,
-        title: h.company,
-        subtitle: `${h.type === 'faang' ? 'Big Tech' : h.type === 'unicorn' ? 'Unicorn' : 'Public'} • ${h.city}, ${h.country}`,
-        data: h,
-      })));
-
-      // Register Accelerators
-      this.searchModal.registerSource('accelerator', ACCELERATORS.map(a => ({
-        id: a.id,
-        title: a.name,
-        subtitle: `${a.type} • ${a.city}, ${a.country}${a.notable ? ` • ${a.notable.slice(0, 2).join(', ')}` : ''}`,
-        data: a,
       })));
     } else {
       // Full variant: geopolitical sources
@@ -1269,37 +1227,6 @@ export class App {
         title: `${g.city}, ${g.country}`,
         subtitle: g.organization || '',
         data: g,
-      })));
-    }
-
-    if (SITE_VARIANT === 'finance') {
-      // Finance variant: market-specific sources
-      this.searchModal.registerSource('exchange', STOCK_EXCHANGES.map(e => ({
-        id: e.id,
-        title: `${e.shortName} - ${e.name}`,
-        subtitle: `${e.tier} • ${e.city}, ${e.country}${e.marketCap ? ` • $${e.marketCap}T` : ''}`,
-        data: e,
-      })));
-
-      this.searchModal.registerSource('financialcenter', FINANCIAL_CENTERS.map(f => ({
-        id: f.id,
-        title: f.name,
-        subtitle: `${f.type} financial center${f.gfciRank ? ` • GFCI #${f.gfciRank}` : ''}${f.specialties ? ` • ${f.specialties.slice(0, 3).join(', ')}` : ''}`,
-        data: f,
-      })));
-
-      this.searchModal.registerSource('centralbank', CENTRAL_BANKS.map(b => ({
-        id: b.id,
-        title: `${b.shortName} - ${b.name}`,
-        subtitle: `${b.type}${b.currency ? ` • ${b.currency}` : ''} • ${b.city}, ${b.country}`,
-        data: b,
-      })));
-
-      this.searchModal.registerSource('commodityhub', COMMODITY_HUBS.map(h => ({
-        id: h.id,
-        title: h.name,
-        subtitle: `${h.type} • ${h.city}, ${h.country}${h.commodities ? ` • ${h.commodities.slice(0, 3).join(', ')}` : ''}`,
-        data: h,
       })));
     }
 
@@ -1422,94 +1349,6 @@ export class App {
         // These are dynamic, just switch to map view
         this.map?.setView('global');
         break;
-      case 'techcompany': {
-        const company = result.data as typeof TECH_COMPANIES[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('techHQs');
-        this.mapLayers.techHQs = true;
-        setTimeout(() => {
-          this.map?.setCenter(company.lat, company.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'ailab': {
-        const lab = result.data as typeof AI_RESEARCH_LABS[0];
-        this.map?.setView('global');
-        setTimeout(() => {
-          this.map?.setCenter(lab.lat, lab.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'startup': {
-        const ecosystem = result.data as typeof STARTUP_ECOSYSTEMS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('startupHubs');
-        this.mapLayers.startupHubs = true;
-        setTimeout(() => {
-          this.map?.setCenter(ecosystem.lat, ecosystem.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'techhq': {
-        const hq = result.data as typeof TECH_HQS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('techHQs');
-        this.mapLayers.techHQs = true;
-        setTimeout(() => {
-          this.map?.setCenter(hq.lat, hq.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'accelerator': {
-        const acc = result.data as typeof ACCELERATORS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('accelerators');
-        this.mapLayers.accelerators = true;
-        setTimeout(() => {
-          this.map?.setCenter(acc.lat, acc.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'exchange': {
-        const exchange = result.data as typeof STOCK_EXCHANGES[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('stockExchanges');
-        this.mapLayers.stockExchanges = true;
-        setTimeout(() => {
-          this.map?.setCenter(exchange.lat, exchange.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'financialcenter': {
-        const fc = result.data as typeof FINANCIAL_CENTERS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('financialCenters');
-        this.mapLayers.financialCenters = true;
-        setTimeout(() => {
-          this.map?.setCenter(fc.lat, fc.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'centralbank': {
-        const bank = result.data as typeof CENTRAL_BANKS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('centralBanks');
-        this.mapLayers.centralBanks = true;
-        setTimeout(() => {
-          this.map?.setCenter(bank.lat, bank.lon, 4);
-        }, 300);
-        break;
-      }
-      case 'commodityhub': {
-        const hub = result.data as typeof COMMODITY_HUBS[0];
-        this.map?.setView('global');
-        this.map?.enableLayer('commodityHubs');
-        this.mapLayers.commodityHubs = true;
-        setTimeout(() => {
-          this.map?.setCenter(hub.lat, hub.lon, 4);
-        }, 300);
-        break;
-      }
       case 'country': {
         const { code, name } = result.data as { code: string; name: string };
         this.openCountryBriefByCode(code, name);
@@ -2005,11 +1844,6 @@ export class App {
     this.attachRelatedAssetHandlers(unicornsPanel);
     this.newsPanels['unicorns'] = unicornsPanel;
     this.panels['unicorns'] = unicornsPanel;
-
-    const acceleratorsPanel = new NewsPanel('accelerators', t('panels.accelerators'));
-    this.attachRelatedAssetHandlers(acceleratorsPanel);
-    this.newsPanels['accelerators'] = acceleratorsPanel;
-    this.panels['accelerators'] = acceleratorsPanel;
 
     const fundingPanel = new NewsPanel('funding', t('panels.funding'));
     this.attachRelatedAssetHandlers(fundingPanel);

@@ -21,15 +21,10 @@ const LAYER_KEYS: (keyof MapLayers)[] = [
   'flights',
   'military',
   'natural',
-  'spaceports',
   'minerals',
   'fires',
   'ucdpEvents',
   'climate',
-  'startupHubs',
-  'cloudRegions',
-  'accelerators',
-  'techHQs',
 ];
 
 const TIME_RANGES: TimeRange[] = ['1h', '6h', '24h', '48h', '7d', 'all'];

@@ -5,10 +5,6 @@ import type { VariantConfig } from './base';
 // Re-export base config
 export * from './base';
 
-// Tech-specific exports
-export * from '../tech-companies';
-export * from '../ai-research-labs';
-export * from '../startup-ecosystems';
 // Tech-focused feeds (subset of full feeds config)
 export {
   SOURCE_TIERS,
@@ -216,22 +212,11 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech-specific layers
-  startupHubs: true,
-  cloudRegions: true,
-  accelerators: false,
-  techHQs: true,
-  // Finance layers (disabled in tech variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 // Mobile defaults for tech variant
@@ -255,22 +240,11 @@ export const MOBILE_DEFAULT_MAP_LAYERS: MapLayers = {
   flights: false,
   military: false,
   natural: true,
-  spaceports: false,
   minerals: false,
   fires: false,
   ucdpEvents: false,
 
   climate: false,
-  // Tech-specific layers (limited on mobile)
-  startupHubs: true,
-  cloudRegions: false,
-  accelerators: false,
-  techHQs: false,
-  // Finance layers (disabled in tech variant)
-  stockExchanges: false,
-  financialCenters: false,
-  centralBanks: false,
-  commodityHubs: false,
 };
 
 export const VARIANT_CONFIG: VariantConfig = {

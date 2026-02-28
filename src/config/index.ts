@@ -64,7 +64,6 @@ export {
   STRATEGIC_WATERWAYS,
   ECONOMIC_CENTERS,
   SANCTIONED_COUNTRIES,
-  SPACEPORTS,
   CRITICAL_MINERALS,
 } from './geo';
 
@@ -79,30 +78,4 @@ export {
   type EntityEntry,
 } from './entities';
 
-// Tech variant - these are included in tech builds
-export { TECH_COMPANIES } from './tech-companies';
-export { AI_RESEARCH_LABS } from './ai-research-labs';
-export { STARTUP_ECOSYSTEMS } from './startup-ecosystems';
-export {
-  STARTUP_HUBS,
-  ACCELERATORS,
-  TECH_HQS,
-  CLOUD_REGIONS,
-  type StartupHub,
-  type Accelerator,
-  type TechHQ,
-  type CloudRegion,
-} from './tech-geo';
-
-// Finance variant - these are included in finance builds
-export {
-  STOCK_EXCHANGES,
-  FINANCIAL_CENTERS,
-  CENTRAL_BANKS,
-  COMMODITY_HUBS,
-  type StockExchange,
-  type FinancialCenter,
-  type CentralBank,
-  type CommodityHub,
-} from './finance-geo';
 
